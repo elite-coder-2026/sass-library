@@ -1,0 +1,14 @@
+$clr-placeholder: #999;
+@mixin placeholder {
+    &::placeholder {
+        @content;
+    }
+
+    &::-ms-input-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
