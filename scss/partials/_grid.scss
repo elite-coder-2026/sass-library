@@ -1,0 +1,99 @@
+@use "sass:math";
+@use "sass:meta";
+@use "./vars" as v;
+
+$grid-columns: 12 !default;
+$grid-gutter: v.space(4) !default;
+$grid-phone-max: v.token(breakpoints, tablet) !default;
+$grid-tablet-min: v.token(breakpoints, tablet) !default;
+$grid-tablet-max: v.token(breakpoints, desktop) !default;
+
+@mixin row($gutter: $grid-gutter) {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(#{$gutter} / -2);
+  margin-right: calc(#{$gutter} / -2);
+}
+
+@mixin col($gutter: $grid-gutter) {
+  box-sizing: border-box;
+  min-width: 0;
+  padding-left: calc(#{$gutter} / 2);
+  padding-right: calc(#{$gutter} / 2);
+}
+
+@mixin col-span($span, $columns: $grid-columns) {
+  @if $span == auto {
+    flex: 1 1 0;
+    max-width: 100%;
+  } @else if meta.type-of($span) == number and $span >= 1 and $span <= $columns {
+    $w: math.percentage(math.div($span, $columns));
+    flex: 0 0 $w;
+    max-width: $w;
+  } @else {
+    @error "Invalid $span `#{$span}`. Use `auto` or a number between 1 and #{$columns}.";
+  }
+}
+
+@mixin phone-layout($portrait-columns: 1, $landscape-columns: 2, $columns: $grid-columns, $col-class: "col") {
+  $max: $grid-phone-max;
+
+  @media (max-width: calc(#{$max} - 0.02px)) and (orientation: portrait) {
+    & > .#{$col-class} {
+      @include col-span(math.div($columns, $portrait-columns), $columns);
+    }
+  }
+
+  @media (max-width: calc(#{$max} - 0.02px)) and (orientation: landscape) {
+    & > .#{$col-class} {
+      @include col-span(math.div($columns, $landscape-columns), $columns);
+    }
+  }
+}
+
+@mixin tablet-layout($portrait-columns: 3, $landscape-columns: 2, $columns: $grid-columns, $col-class: "col") {
+  $min: $grid-tablet-min;
+  $max: $grid-tablet-max;
+
+  @media (min-width: #{$min}) and (max-width: calc(#{$max} - 0.02px)) and (orientation: portrait) {
+    & > .#{$col-class} {
+      @include col-span(math.div($columns, $portrait-columns), $columns);
+    }
+  }
+
+  @media (min-width: #{$min}) and (max-width: calc(#{$max} - 0.02px)) and (orientation: landscape) {
+    & > .#{$col-class} {
+      @include col-span(math.div($columns, $landscape-columns), $columns);
+    }
+  }
+}
+
+@mixin generate-grid-classes($columns: $grid-columns, $gutter: $grid-gutter, $row-class: "row", $col-class: "col", $span-prefix: "col-span") {
+  .#{$row-class} {
+    @include row($gutter);
+  }
+
+  .#{$col-class} {
+    @include col($gutter);
+  }
+
+  .#{$row-class}-phone {
+    @include phone-layout(1, 2, $columns, $col-class);
+  }
+
+  .#{$row-class}-tablet {
+    @include tablet-layout(3, 2, $columns, $col-class);
+  }
+
+  .#{$span-prefix}-auto {
+    @include col-span(auto, $columns);
+  }
+
+  @for $i from 1 through $columns {
+    .#{$span-prefix}-#{$i} {
+      @include col-span($i, $columns);
+    }
+  }
+}
+
+@include generate-grid-classes;
