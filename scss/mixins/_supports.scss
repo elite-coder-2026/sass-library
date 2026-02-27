@@ -1,0 +1,11 @@
+@mixin supports($feature, $value: null) {
+   @if $value == null {
+      @supports (#{$feature}:#{$feature}) {
+         @content;
+      }
+   } @else {
+      @supports (#{$feature}: #{$value}) {
+         @content;
+      }
+   }
+}
