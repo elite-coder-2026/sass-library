@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Receipt</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+  </head>
+  <body>
+    <div class="demo-menu">
+      <div class="demo-menu-shell">
+        <header class="demo-menu-header">
+          <h1 class="demo-menu-title">Receipt</h1>
+          <p class="demo-menu-subtitle">Order details and payment summary.</p>
+        </header>
+
+        <section class="demo-menu-note">
+          <strong>Note:</strong> This is a static demo receipt rendered from the order id in the URL.
+        </section>
+
+        <div class="demo-menu-layout row">
+          <aside class="demo-menu-sidebar col col-span-3">
+            <nav class="demo-menu-nav" aria-label="Menu categories">
+              <p class="demo-menu-nav-title">Our menus</p>
+              <ul class="demo-menu-nav-list">
+                <li><a class="demo-menu-nav-link" href="./menu.html">Pizza</a></li>
+                <li><a class="demo-menu-nav-link" href="./combos.html">Combos</a></li>
+                <li><a class="demo-menu-nav-link" href="./burgers.html">Burgers</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Sides</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Desserts</a></li>
+                <li><a class="demo-menu-nav-link" href="./drinks.html">Drinks</a></li>
+                <li><a class="demo-menu-nav-link" href="./orders-table.html">Orders</a></li>
+                <li><a class="demo-menu-nav-link" href="./receipt.html" aria-current="page">Receipt</a></li>
+                <li><a class="demo-menu-nav-link" href="./other-tables.html">Bookkeeping</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <main class="demo-menu-main col col-span-9">
+            <section class="demo-receipt-card" aria-label="Receipt details">
+	              <header class="demo-receipt-head">
+	                <div class="demo-receipt-head-left">
+	                  <p class="demo-receipt-kicker">Receipt</p>
+	                  <h2 class="demo-receipt-title">
+                    <span>Order</span>
+                    <span class="demo-receipt-order" data-receipt-order>#—</span>
+                  </h2>
+                  <p class="demo-receipt-meta">
+                    <span data-receipt-placed>—</span>
+                    <span aria-hidden="true">•</span>
+                    <span data-receipt-customer>—</span>
+	                  </p>
+	                </div>
+	                <div class="demo-receipt-head-right">
+	                  <span class="demo-badge" data-receipt-status>—</span>
+	                  <label class="demo-receipt-select">
+	                    <span class="demo-receipt-select-label">Order</span>
+	                    <select class="demo-receipt-select-input" data-order-select aria-label="Select order"></select>
+	                  </label>
+	                  <a class="btn btn-secondary btn-sm" href="./orders-table.html">Back to orders</a>
+	                  <button class="btn btn-primary btn-sm" type="button" data-print>Print</button>
+	                </div>
+	              </header>
+
+              <div class="demo-receipt-body">
+                <div class="demo-receipt-grid">
+                  <section class="demo-receipt-panel" aria-label="Payment">
+                    <h3 class="demo-receipt-panel-title">Payment</h3>
+                    <dl class="demo-receipt-kv">
+                      <div>
+                        <dt>Method</dt>
+                        <dd data-receipt-method>—</dd>
+                      </div>
+                      <div>
+                        <dt>Card</dt>
+                        <dd data-receipt-card>—</dd>
+                      </div>
+                      <div>
+                        <dt>Txn</dt>
+                        <dd class="demo-receipt-mono" data-receipt-txn>—</dd>
+                      </div>
+                    </dl>
+                  </section>
+
+                  <section class="demo-receipt-panel" aria-label="Totals">
+                    <h3 class="demo-receipt-panel-title">Totals</h3>
+                    <dl class="demo-receipt-totals">
+                      <div>
+                        <dt>Subtotal</dt>
+                        <dd data-receipt-subtotal>—</dd>
+                      </div>
+                      <div>
+                        <dt>Tax</dt>
+                        <dd data-receipt-tax>—</dd>
+                      </div>
+                      <div class="is-total">
+                        <dt>Total</dt>
+                        <dd data-receipt-total>—</dd>
+                      </div>
+                    </dl>
+                  </section>
+                </div>
+
+                <section class="demo-table-scroll" role="region" aria-label="Line items" tabindex="0">
+                  <table class="demo-table demo-table--tight">
+                    <thead>
+                      <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Option</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Line</th>
+                      </tr>
+                    </thead>
+                    <tbody data-receipt-lines></tbody>
+                  </table>
+                </section>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const TAX_RATE = 0.13;
+        const fmt = new Intl.NumberFormat("en-CA", {
+          style: "currency",
+          currency: "CAD",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+
+        const orders = {
+          10482: {
+            customer: "Alex Chen",
+            placed: "Today, 12:42",
+            status: "paid",
+            payment: { method: "Card", card: "Visa •••• 4242", txn: "TXN-7F2A-10482" },
+            lines: [
+              { item: "Smoky Bacon BBQ", option: "Mild", qty: 2, unit: 13.95 },
+              { item: "Sparkling Water", option: "Can", qty: 1, unit: 2.95 }
+            ]
+          },
+          10481: {
+            customer: "Priya Patel",
+            placed: "Today, 12:18",
+            status: "pending",
+            payment: { method: "Card", card: "Mastercard •••• 1188", txn: "TXN-53B1-10481" },
+            lines: [{ item: "Mushroom Swiss", option: "Caramelized", qty: 1, unit: 13.95 }]
+          },
+          10480: {
+            customer: "Sam Rivera",
+            placed: "Today, 11:56",
+            status: "paid",
+            payment: { method: "Card", card: "Amex •••• 0005", txn: "TXN-2C90-10480" },
+            lines: [
+              { item: "North Tropic", option: 'Large 14"', qty: 1, unit: 13.95 },
+              { item: "Cola", option: "Can", qty: 2, unit: 2.75 },
+              { item: "Kingston Classic", option: "Cheddar", qty: 1, unit: 11.95 }
+            ]
+          },
+          10479: {
+            customer: "Taylor Jones",
+            placed: "Today, 11:22",
+            status: "refunded",
+            payment: { method: "Card", card: "Visa •••• 4411", txn: "TXN-1D7C-10479" },
+            lines: [{ item: "Kingston Classic", option: 'Medium 12"', qty: 1, unit: 10.95 }]
+          },
+          10478: {
+            customer: "Morgan Lee",
+            placed: "Today, 10:57",
+            status: "paid",
+            payment: { method: "Card", card: "Visa •••• 9012", txn: "TXN-9A12-10478" },
+            lines: [
+              { item: "Lunch Box", option: "Salad", qty: 1, unit: 14.95 },
+              { item: "Ginger Ale", option: "Can", qty: 1, unit: 2.75 },
+              { item: "Kids Mini Burger", option: "Milk", qty: 1, unit: 8.95 }
+            ]
+          },
+          10477: {
+            customer: "Jordan Kim",
+            placed: "Today, 10:31",
+            status: "paid",
+            payment: { method: "Card", card: "Visa •••• 2222", txn: "TXN-0B11-10477" },
+            lines: [
+              { item: "Family Feast", option: "2 Large", qty: 1, unit: 39.95 },
+              { item: "Lemon Iced Tea", option: "Large", qty: 2, unit: 3.5 }
+            ]
+          },
+          10476: {
+            customer: "Casey Nguyen",
+            placed: "Today, 10:12",
+            status: "pending",
+            payment: { method: "Card", card: "Mastercard •••• 7070", txn: "TXN-77AC-10476" },
+            lines: [
+              { item: "Blue Cheese Buffalo", option: "On the side", qty: 1, unit: 13.95 },
+              { item: "Sparkling Water", option: "Bottle", qty: 1, unit: 3.95 }
+            ]
+          },
+          10475: {
+            customer: "Riley Smith",
+            placed: "Today, 09:44",
+            status: "paid",
+            payment: { method: "Card", card: "Visa •••• 3030", txn: "TXN-4E0D-10475" },
+            lines: [{ item: "Kids Mini Burger", option: "Juice", qty: 1, unit: 8.95 }]
+          },
+          10474: {
+            customer: "Jamie Park",
+            placed: "Today, 09:12",
+            status: "paid",
+            payment: { method: "Card", card: "Visa •••• 9911", txn: "TXN-8DA1-10474" },
+            lines: [
+              { item: "Spicy Jalapeño", option: "Spicy", qty: 1, unit: 12.95 },
+              { item: "Cola", option: "Bottle", qty: 1, unit: 3.25 }
+            ]
+          },
+          10473: {
+            customer: "Quinn Davis",
+            placed: "Today, 08:46",
+            status: "paid",
+            payment: { method: "Card", card: "Amex •••• 3100", txn: "TXN-1F3B-10473" },
+            lines: [
+              { item: "Date Night", option: "Classic", qty: 1, unit: 22.95 },
+              { item: "Cola", option: "Can", qty: 2, unit: 2.75 },
+              { item: "Garden Veggie", option: "Avocado", qty: 1, unit: 12.95 }
+            ]
+          },
+          10472: {
+            customer: "Harper Wilson",
+            placed: "Today, 08:10",
+            status: "pending",
+            payment: { method: "Card", card: "Visa •••• 5656", txn: "TXN-51A0-10472" },
+            lines: [{ item: "Crispy Chicken", option: "Mayo", qty: 1, unit: 12.95 }]
+          },
+          10471: {
+            customer: "Avery Thompson",
+            placed: "Yesterday, 18:05",
+            status: "paid",
+            payment: { method: "Card", card: "Visa •••• 7777", txn: "TXN-3B10-10471" },
+            lines: [
+              { item: "Maple Peppercorn", option: "Yes", qty: 1, unit: 14.95 },
+              { item: "Sparkling Water", option: "Can", qty: 1, unit: 2.95 },
+              { item: "Kingston Classic", option: "Cheddar", qty: 1, unit: 11.95 }
+            ]
+          }
+        };
+
+        function setBadge(el, status) {
+          el.classList.remove("is-paid", "is-pending", "is-refunded");
+          if (status === "paid") el.classList.add("is-paid");
+          if (status === "pending") el.classList.add("is-pending");
+          if (status === "refunded") el.classList.add("is-refunded");
+          el.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        }
+
+	        function readOrderId() {
+	          const params = new URLSearchParams(window.location.search);
+	          const raw = params.get("order") || "";
+	          const id = Number.parseInt(raw, 10);
+	          if (Number.isNaN(id)) return null;
+	          return id;
+	        }
+
+	        function getDefaultOrderId() {
+	          const ids = Object.keys(orders)
+	            .map((x) => Number.parseInt(x, 10))
+	            .filter((x) => Number.isFinite(x))
+	            .sort((a, b) => b - a);
+	          return ids[0] ?? null;
+	        }
+
+	        function setSearchOrderId(id) {
+	          const url = new URL(window.location.href);
+	          url.searchParams.set("order", String(id));
+	          window.history.replaceState({}, "", url.toString());
+	        }
+
+	        function renderLineRow(line) {
+	          const tr = document.createElement("tr");
+	          const lineTotal = Math.max(0, (line.unit || 0) * (line.qty || 0));
+	          tr.innerHTML = `
+	            <td>${line.item}</td>
+            <td>${line.option || ""}</td>
+            <td class="demo-table-num">${String(line.qty)}</td>
+            <td class="demo-table-num">${fmt.format(line.unit || 0)}</td>
+            <td class="demo-table-num">${fmt.format(lineTotal)}</td>
+          `;
+	          return tr;
+	        }
+
+	        const selectEl = document.querySelector("[data-order-select]");
+
+	        const orderEl = document.querySelector("[data-receipt-order]");
+	        const customerEl = document.querySelector("[data-receipt-customer]");
+	        const placedEl = document.querySelector("[data-receipt-placed]");
+        const statusEl = document.querySelector("[data-receipt-status]");
+        const methodEl = document.querySelector("[data-receipt-method]");
+        const cardEl = document.querySelector("[data-receipt-card]");
+        const txnEl = document.querySelector("[data-receipt-txn]");
+        const subtotalEl = document.querySelector("[data-receipt-subtotal]");
+        const taxEl = document.querySelector("[data-receipt-tax]");
+        const totalEl = document.querySelector("[data-receipt-total]");
+	        const linesEl = document.querySelector("[data-receipt-lines]");
+	        const printBtn = document.querySelector("[data-print]");
+
+	        if (printBtn) printBtn.addEventListener("click", () => window.print());
+
+	        function renderReceipt(id) {
+	          const order = orders[id];
+	          if (!order || !linesEl) return false;
+
+	          document.title = `Receipt #${id}`;
+	          if (orderEl) orderEl.textContent = `#${id}`;
+	          if (customerEl) customerEl.textContent = order.customer;
+	          if (placedEl) placedEl.textContent = order.placed;
+	          if (statusEl) setBadge(statusEl, order.status);
+	          if (methodEl) methodEl.textContent = order.payment.method;
+	          if (cardEl) cardEl.textContent = order.payment.card;
+	          if (txnEl) txnEl.textContent = order.payment.txn;
+
+	          linesEl.textContent = "";
+	          let subtotal = 0;
+	          for (const line of order.lines) {
+	            subtotal += (line.unit || 0) * (line.qty || 0);
+	            linesEl.appendChild(renderLineRow(line));
+	          }
+
+	          const tax = subtotal * TAX_RATE;
+	          const total = subtotal + tax;
+	          if (subtotalEl) subtotalEl.textContent = fmt.format(subtotal);
+	          if (taxEl) taxEl.textContent = fmt.format(tax);
+	          if (totalEl) totalEl.textContent = fmt.format(total);
+	          return true;
+	        }
+
+	        function initOrderSelect(activeId) {
+	          if (!(selectEl instanceof HTMLSelectElement)) return;
+	          const ids = Object.keys(orders)
+	            .map((x) => Number.parseInt(x, 10))
+	            .filter((x) => Number.isFinite(x))
+	            .sort((a, b) => b - a);
+
+	          selectEl.textContent = "";
+	          for (const id of ids) {
+	            const opt = document.createElement("option");
+	            opt.value = String(id);
+	            opt.textContent = `#${id}`;
+	            if (id === activeId) opt.selected = true;
+	            selectEl.appendChild(opt);
+	          }
+
+	          selectEl.addEventListener("change", () => {
+	            const next = Number.parseInt(selectEl.value, 10);
+	            if (!Number.isFinite(next)) return;
+	            setSearchOrderId(next);
+	            renderReceipt(next);
+	          });
+	        }
+
+	        const requestedId = readOrderId();
+	        const initialId = requestedId && orders[requestedId] ? requestedId : getDefaultOrderId();
+
+	        if (initialId == null || !renderReceipt(initialId)) {
+	          if (orderEl) orderEl.textContent = "#—";
+	          if (customerEl) customerEl.textContent = "No orders available";
+	          if (placedEl) placedEl.textContent = "Add an order to the demo dataset.";
+	          if (statusEl) {
+	            statusEl.textContent = "Unavailable";
+	            statusEl.classList.add("is-pending");
+	          }
+	          return;
+	        }
+
+	        initOrderSelect(initialId);
+	        if (requestedId == null || requestedId !== initialId) setSearchOrderId(initialId);
+	      })();
+	    </script>
+	  </body>
+	</html>
