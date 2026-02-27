@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Burgers Demo</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+  </head>
+  <body>
+    <div class="demo-menu">
+      <div class="demo-menu-shell">
+        <header class="demo-menu-header">
+          <h1 class="demo-menu-title">Burgers</h1>
+          <p class="demo-menu-subtitle">Fresh off the grill. Add fries +$3.95.</p>
+        </header>
+
+        <section class="demo-menu-note">
+          <strong>Note:</strong> Ask about gluten-free buns and allergy-friendly swaps.
+        </section>
+
+        <div class="demo-menu-layout row">
+          <aside class="demo-menu-sidebar col col-span-3">
+            <nav class="demo-menu-nav" aria-label="Menu categories">
+              <p class="demo-menu-nav-title">Our menus</p>
+              <ul class="demo-menu-nav-list">
+                <li><a class="demo-menu-nav-link" href="./menu.html">Pizza</a></li>
+                <li><a class="demo-menu-nav-link" href="./combos.html">Combos</a></li>
+                <li><a class="demo-menu-nav-link" href="./burgers.html" aria-current="page">Burgers</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Sides</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Desserts</a></li>
+                <li><a class="demo-menu-nav-link" href="./drinks.html">Drinks</a></li>
+                <li><a class="demo-menu-nav-link" href="./orders-table.html">Orders</a></li>
+                <li><a class="demo-menu-nav-link" href="./receipt.html">Receipt</a></li>
+                <li><a class="demo-menu-nav-link" href="./other-tables.html">Bookkeeping</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <main class="demo-menu-main col col-span-6">
+            <section class="demo-menu-grid row row-phone row-tablet" aria-label="Burger items">
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">680–920 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Kingston Classic</h2>
+                    <p class="demo-menu-desc">Beef patty, lettuce, tomato, house sauce.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Cheese</span>
+                      <a class="demo-pill is-selected" href="#">Cheddar</a>
+                      <a class="demo-pill" href="#">Swiss</a>
+                      <a class="demo-pill" href="#">No cheese</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $11.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">760–1040 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Smoky Bacon BBQ</h2>
+                    <p class="demo-menu-desc">Bacon, crispy onions, cheddar, BBQ glaze.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Heat</span>
+                      <a class="demo-pill is-selected" href="#">Mild</a>
+                      <a class="demo-pill" href="#">Medium</a>
+                      <a class="demo-pill" href="#">Hot</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $13.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">890–1220 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Double Stack</h2>
+                    <p class="demo-menu-desc">Two patties, pickles, onions, special sauce.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Bun</span>
+                      <a class="demo-pill is-selected" href="#">Sesame</a>
+                      <a class="demo-pill" href="#">Brioche</a>
+                      <a class="demo-pill" href="#">Lettuce wrap</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $14.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">720–980 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Spicy Jalapeño</h2>
+                    <p class="demo-menu-desc">Pepper jack, jalapeños, chipotle mayo.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Pickles</span>
+                      <a class="demo-pill is-selected" href="#">Dill</a>
+                      <a class="demo-pill" href="#">Spicy</a>
+                      <a class="demo-pill" href="#">No pickles</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $12.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">740–1010 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Mushroom Swiss</h2>
+                    <p class="demo-menu-desc">Sautéed mushrooms, swiss, caramelized onions.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Onion</span>
+                      <a class="demo-pill is-selected" href="#">Caramelized</a>
+                      <a class="demo-pill" href="#">Raw</a>
+                      <a class="demo-pill" href="#">No onion</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $13.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">690–960 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Crispy Chicken</h2>
+                    <p class="demo-menu-desc">Crispy chicken, slaw, pickles, mayo.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Sauce</span>
+                      <a class="demo-pill is-selected" href="#">Mayo</a>
+                      <a class="demo-pill" href="#">Honey mustard</a>
+                      <a class="demo-pill" href="#">No sauce</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $12.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">740–1020 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Nashville Hot Chicken</h2>
+                    <p class="demo-menu-desc">Hot glaze, pickles, slaw, comeback sauce.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Heat</span>
+                      <a class="demo-pill" href="#">Medium</a>
+                      <a class="demo-pill is-selected" href="#">Hot</a>
+                      <a class="demo-pill" href="#">Extra hot</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $13.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">640–860 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Garden Veggie</h2>
+                    <p class="demo-menu-desc">Plant patty, avocado, tomato, lemon aioli.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Add-on</span>
+                      <a class="demo-pill is-selected" href="#">Avocado</a>
+                      <a class="demo-pill" href="#">Pickles</a>
+                      <a class="demo-pill" href="#">No add-on</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $12.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">780–1120 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Maple Peppercorn</h2>
+                    <p class="demo-menu-desc">Peppercorn aioli, bacon, maple drizzle.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Bacon</span>
+                      <a class="demo-pill is-selected" href="#">Yes</a>
+                      <a class="demo-pill" href="#">Extra</a>
+                      <a class="demo-pill" href="#">No</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $14.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">810–1160 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Breakfast Burger</h2>
+                    <p class="demo-menu-desc">Fried egg, cheddar, hash brown, ketchup.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Egg</span>
+                      <a class="demo-pill is-selected" href="#">Fried</a>
+                      <a class="demo-pill" href="#">Over easy</a>
+                      <a class="demo-pill" href="#">No egg</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $14.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">700–980 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Blue Cheese Buffalo</h2>
+                    <p class="demo-menu-desc">Buffalo sauce, blue cheese, shredded lettuce.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Ranch</span>
+                      <a class="demo-pill is-selected" href="#">On the side</a>
+                      <a class="demo-pill" href="#">On it</a>
+                      <a class="demo-pill" href="#">No ranch</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $13.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">520–740 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Kids Mini Burger</h2>
+                    <p class="demo-menu-desc">Small patty, cheddar, ketchup. Includes apple slices.</p>
+                    <div class="demo-menu-options" aria-label="Options">
+                      <span class="demo-menu-options-label">Drink</span>
+                      <a class="demo-pill is-selected" href="#">Milk</a>
+                      <a class="demo-pill" href="#">Juice</a>
+                      <a class="demo-pill" href="#">Water</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $8.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </main>
+
+          <aside class="demo-menu-aside col col-span-3">
+            <section class="demo-cart" aria-label="Cart">
+              <div class="demo-cart-head">
+                <p class="demo-cart-title">Your cart</p>
+                <p class="demo-cart-count"><span data-cart-count>3</span> items</p>
+              </div>
+
+              <ul class="demo-cart-list" data-cart-list>
+                <li class="demo-cart-item" data-cart-item data-unit-price="13.95" data-qty="2">
+                  <div class="demo-cart-thumb" aria-hidden="true"></div>
+                  <div class="demo-cart-meta">
+                    <p class="demo-cart-name">Smoky Bacon BBQ</p>
+                    <p class="demo-cart-sub">Mild</p>
+                  </div>
+                  <div class="demo-cart-right">
+                    <p class="demo-cart-price" data-line-price>$27.90</p>
+                    <div class="demo-cart-qty" aria-label="Quantity controls">
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+                      <span class="demo-cart-qty-value" data-qty-value>2</span>
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-plus aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn btn-secondary btn-sm demo-cart-remove" type="button" data-remove>Remove</button>
+                  </div>
+                </li>
+
+                <li class="demo-cart-item" data-cart-item data-unit-price="13.95" data-qty="1">
+                  <div class="demo-cart-thumb" aria-hidden="true"></div>
+                  <div class="demo-cart-meta">
+                    <p class="demo-cart-name">Mushroom Swiss</p>
+                    <p class="demo-cart-sub">Caramelized</p>
+                  </div>
+                  <div class="demo-cart-right">
+                    <p class="demo-cart-price" data-line-price>$13.95</p>
+                    <div class="demo-cart-qty" aria-label="Quantity controls">
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+                      <span class="demo-cart-qty-value" data-qty-value>1</span>
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-plus aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn btn-secondary btn-sm demo-cart-remove" type="button" data-remove>Remove</button>
+                  </div>
+                </li>
+              </ul>
+              <p class="demo-cart-empty" data-cart-empty hidden>Cart is empty.</p>
+
+              <div class="demo-cart-summary" aria-label="Cart totals">
+                <div class="demo-cart-row">
+                  <span>Subtotal</span>
+                  <span data-subtotal>$41.85</span>
+                </div>
+                <div class="demo-cart-row">
+                  <span>Tax</span>
+                  <span data-tax>$5.44</span>
+                </div>
+                <div class="demo-cart-row demo-cart-row--total">
+                  <span>Total</span>
+                  <span data-total>$47.29</span>
+                </div>
+              </div>
+
+              <div class="demo-cart-actions">
+                <button class="btn btn-primary btn-lg demo-cart-checkout" type="button">Checkout</button>
+                <button class="btn btn-secondary btn-md demo-cart-clear" type="button" data-clear>Clear cart</button>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <script src="./cart.js" defer></script>
+  </body>
+</html>
