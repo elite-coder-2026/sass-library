@@ -1,0 +1,214 @@
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+@use "../partials/vars" as tokens;
+
+$breakpoints: (
+  handset: 24rem,
+  tablet: 48rem,
+  desktop: 64rem,
+  wide: 80rem
+) !default;
+
+@function _breakpoint($key) {
+  $value: null;
+
+  @if map.has-key($breakpoints, $key) {
+    $value: map.get($breakpoints, $key);
+  } @else if map.has-key(tokens.$breakpoints, $key) {
+    $value: map.get(tokens.$breakpoints, $key);
+  }
+
+  @if $value != null {
+    @return $value;
+  }
+
+  @error "Unknown breakpoint `#{$key}`. Expected one of: #{map.keys(tokens.$breakpoints)}.";
+}
+
+@mixin up($breakpoint) {
+  @media (min-width: #{_breakpoint($breakpoint)}) {
+    @content;
+  }
+}
+
+@mixin down($breakpoint) {
+  $value: _breakpoint($breakpoint);
+  @media (max-width: calc(#{$value} - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin between($min, $max) {
+  $min-value: _breakpoint($min);
+  $max-value: _breakpoint($max);
+
+  @media (min-width: #{$min-value}) and (max-width: calc(#{$max-value} - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin dark-scheme {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+@mixin theme($name) {
+  [data-theme="#{$name}"] & {
+    @content;
+  }
+}
+
+@mixin sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@mixin sr-only-focusable {
+  @include sr-only;
+
+  &:focus,
+  &:active {
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    white-space: normal;
+    width: auto;
+  }
+}
+
+@mixin focus-ring($color: currentColor, $width: 2px, $offset: 2px, $style: solid) {
+  &:focus-visible {
+    outline: $width $style $color;
+    outline-offset: $offset;
+  }
+}
+
+@mixin tap-highlight-none {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+@mixin size($width, $height: $width) {
+  height: $height;
+  width: $width;
+}
+
+@mixin absolute-center($axis: both) {
+  position: absolute;
+
+  @if $axis == both {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  } @else if $axis == x {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if $axis == y {
+    top: 50%;
+    transform: translateY(-50%);
+  } @else {
+    @error "Invalid $axis `#{$axis}`. Use `both`, `x`, or `y`.";
+  }
+}
+
+@mixin flex-center($direction: row, $gap: null) {
+  align-items: center;
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin container($max: 72rem, $padding-x: 1rem) {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $max;
+  padding-left: $padding-x;
+  padding-right: $padding-x;
+}
+
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else if meta.type-of($lines) == number and $lines > 1 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+    overflow: hidden;
+  } @else {
+    @error "Invalid $lines `#{$lines}`. Use `1` or an integer > 1.";
+  }
+}
+
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: math.div($width, $height);
+}
+
+@mixin placeholder {
+  &::placeholder {
+    @content;
+  }
+
+  &::-ms-input-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin button-reset {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin text-gradient($from, $to, $direction: to right) {
+  background-image: linear-gradient($direction, $from, $to);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
