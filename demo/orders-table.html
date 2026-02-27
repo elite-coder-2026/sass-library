@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Orders Table Demo</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+  </head>
+  <body>
+    <div class="demo-menu">
+      <div class="demo-menu-shell">
+        <header class="demo-menu-header">
+          <h1 class="demo-menu-title">Orders</h1>
+          <p class="demo-menu-subtitle">A simple, responsive orders table using the same demo styling.</p>
+        </header>
+
+        <section class="demo-menu-note">
+          <strong>Tip:</strong> Scroll the table horizontally on small screens to see all columns.
+        </section>
+
+        <div class="demo-menu-layout row">
+          <aside class="demo-menu-sidebar col col-span-3">
+            <nav class="demo-menu-nav" aria-label="Menu categories">
+              <p class="demo-menu-nav-title">Our menus</p>
+              <ul class="demo-menu-nav-list">
+                <li><a class="demo-menu-nav-link" href="./menu.html">Pizza</a></li>
+                <li><a class="demo-menu-nav-link" href="./combos.html">Combos</a></li>
+                <li><a class="demo-menu-nav-link" href="./burgers.html">Burgers</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Sides</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Desserts</a></li>
+                <li><a class="demo-menu-nav-link" href="./drinks.html">Drinks</a></li>
+                <li><a class="demo-menu-nav-link" href="./orders-table.html" aria-current="page">Orders</a></li>
+                <li><a class="demo-menu-nav-link" href="./receipt.html">Receipt</a></li>
+                <li><a class="demo-menu-nav-link" href="./other-tables.html">Bookkeeping</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <main class="demo-menu-main col col-span-9">
+            <section class="demo-table-card" aria-label="Recent orders">
+              <header class="demo-table-head">
+                <div>
+                  <h2 class="demo-table-title">Recent orders</h2>
+                  <p class="demo-table-meta" data-orders-meta>
+                    Updated just now • Showing <span data-orders-count>12</span> orders
+                  </p>
+                </div>
+                <div class="demo-table-filters" aria-label="Filters" data-orders-filters>
+                  <a class="demo-pill is-selected" href="./orders-table.html" data-filter="all">All</a>
+                  <a class="demo-pill" href="./orders-table.html?status=paid" data-filter="paid">Paid</a>
+                  <a class="demo-pill" href="./orders-table.html?status=pending" data-filter="pending">Pending</a>
+                  <a class="demo-pill" href="./orders-table.html?status=refunded" data-filter="refunded">Refunded</a>
+                </div>
+              </header>
+
+              <div class="demo-table-scroll" role="region" aria-label="Orders table" tabindex="0">
+                <table class="demo-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Order</th>
+                      <th scope="col">Customer</th>
+                      <th scope="col">Items</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Placed</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody data-orders-tbody>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10482</td>
+                      <td>Alex Chen</td>
+                      <td>2 items</td>
+                      <td class="demo-table-num">$27.90</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 12:42</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10482">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Refund</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="pending">
+                      <td class="demo-table-num">#10481</td>
+                      <td>Priya Patel</td>
+                      <td>1 item</td>
+                      <td class="demo-table-num">$13.95</td>
+                      <td><span class="demo-badge is-pending">Pending</span></td>
+                      <td>Today, 12:18</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10481">View</a>
+                        <button class="btn btn-primary btn-sm" type="button">Capture</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10480</td>
+                      <td>Sam Rivera</td>
+                      <td>3 items</td>
+                      <td class="demo-table-num">$41.85</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 11:56</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10480">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="refunded">
+                      <td class="demo-table-num">#10479</td>
+                      <td>Taylor Jones</td>
+                      <td>1 item</td>
+                      <td class="demo-table-num">$10.95</td>
+                      <td><span class="demo-badge is-refunded">Refunded</span></td>
+                      <td>Today, 11:22</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10479">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Note</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10478</td>
+                      <td>Morgan Lee</td>
+                      <td>2 items</td>
+                      <td class="demo-table-num">$22.90</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 10:57</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10478">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10477</td>
+                      <td>Jordan Kim</td>
+                      <td>4 items</td>
+                      <td class="demo-table-num">$63.05</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 10:31</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10477">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="pending">
+                      <td class="demo-table-num">#10476</td>
+                      <td>Casey Nguyen</td>
+                      <td>2 items</td>
+                      <td class="demo-table-num">$25.90</td>
+                      <td><span class="demo-badge is-pending">Pending</span></td>
+                      <td>Today, 10:12</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10476">View</a>
+                        <button class="btn btn-primary btn-sm" type="button">Capture</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10475</td>
+                      <td>Riley Smith</td>
+                      <td>1 item</td>
+                      <td class="demo-table-num">$8.95</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 09:44</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10475">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10474</td>
+                      <td>Jamie Park</td>
+                      <td>2 items</td>
+                      <td class="demo-table-num">$19.90</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 09:12</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10474">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10473</td>
+                      <td>Quinn Davis</td>
+                      <td>3 items</td>
+                      <td class="demo-table-num">$39.85</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Today, 08:46</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10473">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="pending">
+                      <td class="demo-table-num">#10472</td>
+                      <td>Harper Wilson</td>
+                      <td>1 item</td>
+                      <td class="demo-table-num">$12.95</td>
+                      <td><span class="demo-badge is-pending">Pending</span></td>
+                      <td>Today, 08:10</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10472">View</a>
+                        <button class="btn btn-primary btn-sm" type="button">Capture</button>
+                      </td>
+                    </tr>
+                    <tr data-order-status="paid">
+                      <td class="demo-table-num">#10471</td>
+                      <td>Avery Thompson</td>
+                      <td>2 items</td>
+                      <td class="demo-table-num">$26.90</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                      <td>Yesterday, 18:05</td>
+                      <td class="demo-table-actions">
+                        <a class="btn btn-secondary btn-sm" href="./receipt.html?order=10471">View</a>
+                        <button class="btn btn-secondary btn-sm" type="button">Receipt</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const filtersEl = document.querySelector("[data-orders-filters]");
+        const tbodyEl = document.querySelector("[data-orders-tbody]");
+        const countEl = document.querySelector("[data-orders-count]");
+
+        if (!filtersEl || !tbodyEl) return;
+
+        const rows = Array.from(tbodyEl.querySelectorAll("tr[data-order-status]"));
+        const pills = Array.from(filtersEl.querySelectorAll("[data-filter]"));
+
+        function setSearchStatus(status) {
+          const url = new URL(window.location.href);
+          if (!status || status === "all") {
+            url.searchParams.delete("status");
+          } else {
+            url.searchParams.set("status", status);
+          }
+          window.history.replaceState({}, "", url.toString());
+        }
+
+        function setSelected(status) {
+          for (const pill of pills) {
+            const isActive = pill.getAttribute("data-filter") === status;
+            pill.classList.toggle("is-selected", isActive);
+          }
+        }
+
+        function applyFilter(status) {
+          const s = status || "all";
+          let visible = 0;
+
+          for (const row of rows) {
+            const match = s === "all" || row.dataset.orderStatus === s;
+            row.hidden = !match;
+            if (match) visible += 1;
+          }
+
+          if (countEl) countEl.textContent = String(visible);
+          setSelected(s);
+          setSearchStatus(s);
+        }
+
+        function readInitialFilter() {
+          const params = new URLSearchParams(window.location.search);
+          const status = (params.get("status") || "all").toLowerCase();
+          if (status === "paid" || status === "pending" || status === "refunded") return status;
+          return "all";
+        }
+
+        filtersEl.addEventListener("click", (e) => {
+          const target = e.target;
+          if (!(target instanceof HTMLElement)) return;
+          const pill = target.closest("[data-filter]");
+          if (!(pill instanceof HTMLAnchorElement)) return;
+          e.preventDefault();
+          applyFilter(pill.getAttribute("data-filter") || "all");
+        });
+
+        applyFilter(readInitialFilter());
+      })();
+    </script>
+  </body>
+</html>
