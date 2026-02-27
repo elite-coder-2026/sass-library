@@ -1,0 +1,157 @@
+@use "sass:map";
+@use "./vars" as v;
+@use "../mixins" as *;
+
+
+$button-variants: (
+        primary: (
+                bg: v.token(colors, brand, 600),
+                bg-hover: v.token(colors, brand, 700),
+                border: v.token(colors, brand, 700),
+                text: v.token(colors, text, inverse)
+        ),
+        secondary: (
+                bg: v.token(colors, neutral, 700),
+                bg-hover: v.token(colors, neutral, 800),
+                border: v.token(colors, border, default),
+                text: v.token(colors, text, inverse)
+        ),
+        success: (
+                bg: v.token(colors, success, 500),
+                bg-hover: v.token(colors, success, 700),
+                border: v.token(colors, success, 700),
+                text: v.token(colors, text, inverse)
+        ),
+        warning: (
+                bg: v.token(colors, warning, 500),
+                bg-hover: v.token(colors, warning, 700),
+                border: v.token(colors, warning, 700),
+                text: v.token(colors, text, inverse)
+        ),
+        danger: (
+                bg: v.token(colors, danger, 500),
+                bg-hover: v.token(colors, danger, 700),
+                border: v.token(colors, danger, 700),
+                text: v.token(colors, text, inverse)
+        ),
+        error: (
+                bg: v.token(colors, danger, 500),
+                bg-hover: v.token(colors, danger, 700),
+                border: v.token(colors, danger, 700),
+                text: v.token(colors, text, inverse)
+        )
+) !default;
+
+$button-sizes: (
+        sm: (
+                font-size: sm,
+                padding-y: v.space(2),
+                padding-x: v.space(3),
+                min-height: 2rem
+        ),
+        md: (
+                font-size: md,
+                padding-y: 0.625rem,
+                padding-x: v.space(4),
+                min-height: 2.5rem
+        ),
+        lg: (
+                font-size: lg,
+                padding-y: v.space(3),
+                padding-x: v.space(6),
+                min-height: 3rem
+        )
+) !default;
+
+@function _btn-radius() {
+  $radius-key: map.get(v.$buttons, radius);
+  @return v.radius($radius-key);
+}
+
+@mixin _button-base {
+    @include button-reset;
+    @include tap-highlight-none;
+
+    align-items: center;
+    border: 1px solid v.token(colors, border, default);
+    border-radius: _btn-radius();
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: v.token(typography, weight, medium);
+    gap: v.space(2);
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.625rem v.space(4);
+    text-decoration: none;
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+    user-select: none;
+    white-space: nowrap;
+
+    @include focus-ring(v.token(colors, border, focus), map.get(v.token(button, focus-ring), width), map.get(v.token(button, focus-ring), offset));
+
+    &:disabled,
+    &[aria-disabled="true"] {
+        cursor: not-allowed;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+}
+
+@mixin _button-variant($name) {
+    $variant: map.get($button-variants, $name);
+
+    @if $variant == null {
+        @error "Unknown button variant `#{$name}`. Expected one of: #{map.keys($button-variants)}.";
+    }
+
+    background-color: map.get($variant, bg);
+    border-color: map.get($variant, border);
+    color: map.get($variant, text);
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: map.get($variant, bg-hover);
+            border-color: map.get($variant, bg-hover);
+        }
+    }
+}
+
+@mixin _button-size($name) {
+    $size: map.get($button-sizes, $name);
+
+    @if $size == null {
+        @error "Unknown button size `#{$name}`. Expected one of: #{map.keys($button-sizes)}.";
+    }
+
+    $font-size-key: map.get($size, font-size);
+
+    font-size: v.type-size($font-size-key);
+    min-height: map.get($size, min-height);
+    padding: map.get($size, padding-y) map.get($size, padding-x);
+}
+
+@mixin button($variant: primary, $size: md) {
+    @include _button-base;
+    @include _button-variant($variant);
+    @include _button-size($size);
+}
+
+@mixin generate-button-classes($class: "btn") {
+    .#{$class} {
+        @include button(primary, md);
+    }
+
+    @each $variant in map.keys($button-variants) {
+        .#{$class}-#{$variant} {
+            @include _button-variant($variant);
+        }
+    }
+
+    @each $size in map.keys($button-sizes) {
+        .#{$class}-#{$size} {
+            @include _button-size($size);
+        }
+    }
+}
+
+@include generate-button-classes;
