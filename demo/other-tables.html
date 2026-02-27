@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bookkeeping Demo</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+  </head>
+  <body>
+    <div class="demo-menu">
+      <div class="demo-menu-shell">
+        <header class="demo-menu-header">
+          <h1 class="demo-menu-title">Bookkeeping</h1>
+          <p class="demo-menu-subtitle">Charts + tables for quick bookkeeping review.</p>
+        </header>
+
+        <section class="demo-menu-note">
+          <strong>Note:</strong> All values are demo data (CAD).
+        </section>
+
+        <div class="demo-menu-layout row">
+          <aside class="demo-menu-sidebar col col-span-3">
+            <nav class="demo-menu-nav" aria-label="Menu categories">
+              <p class="demo-menu-nav-title">Our menus</p>
+              <ul class="demo-menu-nav-list">
+                <li><a class="demo-menu-nav-link" href="./menu.html">Pizza</a></li>
+                <li><a class="demo-menu-nav-link" href="./combos.html">Combos</a></li>
+                <li><a class="demo-menu-nav-link" href="./burgers.html">Burgers</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Sides</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Desserts</a></li>
+                <li><a class="demo-menu-nav-link" href="./drinks.html">Drinks</a></li>
+                <li><a class="demo-menu-nav-link" href="./orders-table.html">Orders</a></li>
+                <li><a class="demo-menu-nav-link" href="./receipt.html">Receipt</a></li>
+                <li><a class="demo-menu-nav-link" href="./other-tables.html" aria-current="page">Bookkeeping</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <main class="demo-menu-main col col-span-9">
+            <section class="demo-stats" aria-label="Key totals">
+              <div class="demo-stat">
+                <p class="demo-stat-label">Revenue (MTD)</p>
+                <p class="demo-stat-value">$8,420.35</p>
+                <p class="demo-stat-sub"><span class="demo-badge is-paid">Up 6%</span> vs last month</p>
+              </div>
+              <div class="demo-stat">
+                <p class="demo-stat-label">Expenses (MTD)</p>
+                <p class="demo-stat-value">$5,173.10</p>
+                <p class="demo-stat-sub"><span class="demo-badge is-pending">Pending 3</span> bills</p>
+              </div>
+              <div class="demo-stat">
+                <p class="demo-stat-label">Net (MTD)</p>
+                <p class="demo-stat-value">$3,247.25</p>
+                <p class="demo-stat-sub">After 13% tax estimate</p>
+              </div>
+            </section>
+
+            <section class="demo-charts" aria-label="Charts">
+              <article class="demo-chart-card" aria-label="Revenue by week chart">
+                <header class="demo-chart-head">
+                  <h2 class="demo-chart-title">Revenue by week</h2>
+                  <p class="demo-chart-meta">Last 8 weeks</p>
+                </header>
+                <div class="demo-bar-chart" role="img" aria-label="Bar chart of revenue by week" data-revenue-chart>
+                  <div class="demo-bar" style="--v: 48"><span>$1.2k</span></div>
+                  <div class="demo-bar" style="--v: 62"><span>$1.6k</span></div>
+                  <div class="demo-bar" style="--v: 55"><span>$1.4k</span></div>
+                  <div class="demo-bar" style="--v: 70"><span>$1.9k</span></div>
+                  <div class="demo-bar" style="--v: 66"><span>$1.7k</span></div>
+                  <div class="demo-bar" style="--v: 78"><span>$2.1k</span></div>
+                  <div class="demo-bar" style="--v: 74"><span>$2.0k</span></div>
+                  <div class="demo-bar" style="--v: 82"><span>$2.2k</span></div>
+                </div>
+              </article>
+
+              <article class="demo-chart-card" aria-label="Expense split chart">
+                <header class="demo-chart-head">
+                  <h2 class="demo-chart-title">Expense split</h2>
+                  <p class="demo-chart-meta">Month to date</p>
+                </header>
+                <div class="demo-donut" role="img" aria-label="Donut chart of expenses by category" data-expense-donut>
+                  <svg viewBox="0 0 120 120" class="demo-donut-svg" aria-hidden="true">
+                    <circle class="demo-donut-ring" cx="60" cy="60" r="44" />
+                    <circle class="demo-donut-seg demo-donut-seg--a" cx="60" cy="60" r="44" />
+                    <circle class="demo-donut-seg demo-donut-seg--b" cx="60" cy="60" r="44" />
+                    <circle class="demo-donut-seg demo-donut-seg--c" cx="60" cy="60" r="44" />
+                  </svg>
+                  <div class="demo-donut-legend" aria-label="Legend">
+                    <div><span class="demo-dot is-a"></span> Food &amp; supplies (52%)</div>
+                    <div><span class="demo-dot is-b"></span> Wages (34%)</div>
+                    <div><span class="demo-dot is-c"></span> Rent &amp; utilities (14%)</div>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="demo-table-card" aria-label="Income table">
+              <header class="demo-table-head">
+                <div>
+                  <h2 class="demo-table-title">Income</h2>
+                  <p class="demo-table-meta">Daily totals (last 7 days)</p>
+                </div>
+              </header>
+              <div class="demo-table-scroll" role="region" aria-label="Income table" tabindex="0">
+                <table class="demo-table demo-table--tight">
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Orders</th>
+                      <th scope="col">Gross</th>
+                      <th scope="col">Tax estimate (13%)</th>
+                      <th scope="col">Net</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Mon</td>
+                      <td class="demo-table-num">64</td>
+                      <td class="demo-table-num">$1,284.90</td>
+                      <td class="demo-table-num">$167.04</td>
+                      <td class="demo-table-num">$1,117.86</td>
+                    </tr>
+                    <tr>
+                      <td>Tue</td>
+                      <td class="demo-table-num">58</td>
+                      <td class="demo-table-num">$1,146.25</td>
+                      <td class="demo-table-num">$149.01</td>
+                      <td class="demo-table-num">$997.24</td>
+                    </tr>
+                    <tr>
+                      <td>Wed</td>
+                      <td class="demo-table-num">73</td>
+                      <td class="demo-table-num">$1,422.80</td>
+                      <td class="demo-table-num">$184.96</td>
+                      <td class="demo-table-num">$1,237.84</td>
+                    </tr>
+                    <tr>
+                      <td>Thu</td>
+                      <td class="demo-table-num">69</td>
+                      <td class="demo-table-num">$1,361.10</td>
+                      <td class="demo-table-num">$176.94</td>
+                      <td class="demo-table-num">$1,184.16</td>
+                    </tr>
+                    <tr>
+                      <td>Fri</td>
+                      <td class="demo-table-num">81</td>
+                      <td class="demo-table-num">$1,612.40</td>
+                      <td class="demo-table-num">$209.61</td>
+                      <td class="demo-table-num">$1,402.79</td>
+                    </tr>
+                    <tr>
+                      <td>Sat</td>
+                      <td class="demo-table-num">94</td>
+                      <td class="demo-table-num">$1,895.55</td>
+                      <td class="demo-table-num">$246.42</td>
+                      <td class="demo-table-num">$1,649.13</td>
+                    </tr>
+                    <tr>
+                      <td>Sun</td>
+                      <td class="demo-table-num">77</td>
+                      <td class="demo-table-num">$1,697.35</td>
+                      <td class="demo-table-num">$220.66</td>
+                      <td class="demo-table-num">$1,476.69</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="demo-table-card" aria-label="Expenses table">
+              <header class="demo-table-head">
+                <div>
+                  <h2 class="demo-table-title">Expenses</h2>
+                  <p class="demo-table-meta">Bills and spend (month to date)</p>
+                </div>
+              </header>
+              <div class="demo-table-scroll" role="region" aria-label="Expenses table" tabindex="0">
+                <table class="demo-table demo-table--tight">
+                  <thead>
+                    <tr>
+                      <th scope="col">Vendor</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Due</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>FreshFoods Supply</td>
+                      <td>Food &amp; supplies</td>
+                      <td>Mar 01</td>
+                      <td class="demo-table-num">$1,842.10</td>
+                      <td><span class="demo-badge is-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td>City Utilities</td>
+                      <td>Rent &amp; utilities</td>
+                      <td>Mar 05</td>
+                      <td class="demo-table-num">$612.00</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                    </tr>
+                    <tr>
+                      <td>Payroll</td>
+                      <td>Wages</td>
+                      <td>Mar 08</td>
+                      <td class="demo-table-num">$2,104.00</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                    </tr>
+                    <tr>
+                      <td>Packaging Co.</td>
+                      <td>Food &amp; supplies</td>
+                      <td>Mar 10</td>
+                      <td class="demo-table-num">$428.75</td>
+                      <td><span class="demo-badge is-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td>Equipment Repair</td>
+                      <td>Maintenance</td>
+                      <td>Mar 12</td>
+                      <td class="demo-table-num">$186.25</td>
+                      <td><span class="demo-badge is-refunded">Refunded</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="demo-table-card" aria-label="Accounts receivable table">
+              <header class="demo-table-head">
+                <div>
+                  <h2 class="demo-table-title">Accounts receivable</h2>
+                  <p class="demo-table-meta">Outstanding invoices</p>
+                </div>
+              </header>
+              <div class="demo-table-scroll" role="region" aria-label="Accounts receivable table" tabindex="0">
+                <table class="demo-table demo-table--tight">
+                  <thead>
+                    <tr>
+                      <th scope="col">Invoice</th>
+                      <th scope="col">Customer</th>
+                      <th scope="col">Issued</th>
+                      <th scope="col">Due</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="demo-table-num">INV-2201</td>
+                      <td>Downtown Offices</td>
+                      <td>Feb 10</td>
+                      <td>Feb 24</td>
+                      <td class="demo-table-num">$1,240.00</td>
+                      <td><span class="demo-badge is-pending">Open</span></td>
+                    </tr>
+                    <tr>
+                      <td class="demo-table-num">INV-2202</td>
+                      <td>Event Catering Co.</td>
+                      <td>Feb 15</td>
+                      <td>Feb 29</td>
+                      <td class="demo-table-num">$2,095.50</td>
+                      <td><span class="demo-badge is-pending">Open</span></td>
+                    </tr>
+                    <tr>
+                      <td class="demo-table-num">INV-2203</td>
+                      <td>Community Center</td>
+                      <td>Feb 18</td>
+                      <td>Mar 03</td>
+                      <td class="demo-table-num">$684.25</td>
+                      <td><span class="demo-badge is-paid">Paid</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script type="application/json" data-bookkeeping-data>
+      {
+        "currency": "CAD",
+        "revenueByWeek": [
+          { "label": "Week 1", "total": 1200 },
+          { "label": "Week 2", "total": 1600 },
+          { "label": "Week 3", "total": 1400 },
+          { "label": "Week 4", "total": 1900 },
+          { "label": "Week 5", "total": 1700 },
+          { "label": "Week 6", "total": 2100 },
+          { "label": "Week 7", "total": 2000 },
+          { "label": "Week 8", "total": 2200 }
+        ],
+        "expenseSplit": [
+          { "category": "Food & supplies", "pct": 52 },
+          { "category": "Wages", "pct": 34 },
+          { "category": "Rent & utilities", "pct": 14 }
+        ]
+      }
+    </script>
+    <script src="./other-tables.js" defer></script>
+  </body>
+</html>
