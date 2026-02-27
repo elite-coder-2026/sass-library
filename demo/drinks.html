@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Drinks Demo</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+  </head>
+  <body>
+    <div class="demo-menu">
+      <div class="demo-menu-shell">
+        <header class="demo-menu-header">
+          <h1 class="demo-menu-title">Drinks</h1>
+          <p class="demo-menu-subtitle">Cold cans, sparkling, and house-made options.</p>
+        </header>
+
+        <section class="demo-menu-note">
+          <strong>Note:</strong> Ice available on request. Please mention allergies when ordering.
+        </section>
+
+        <div class="demo-menu-layout row">
+          <aside class="demo-menu-sidebar col col-span-3">
+            <nav class="demo-menu-nav" aria-label="Menu categories">
+              <p class="demo-menu-nav-title">Our menus</p>
+              <ul class="demo-menu-nav-list">
+                <li><a class="demo-menu-nav-link" href="./menu.html">Pizza</a></li>
+                <li><a class="demo-menu-nav-link" href="./combos.html">Combos</a></li>
+                <li><a class="demo-menu-nav-link" href="./burgers.html">Burgers</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Sides</a></li>
+                <li><a class="demo-menu-nav-link" href="#">Desserts</a></li>
+                <li><a class="demo-menu-nav-link" href="./drinks.html" aria-current="page">Drinks</a></li>
+                <li><a class="demo-menu-nav-link" href="./orders-table.html">Orders</a></li>
+                <li><a class="demo-menu-nav-link" href="./receipt.html">Receipt</a></li>
+                <li><a class="demo-menu-nav-link" href="./other-tables.html">Bookkeeping</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <main class="demo-menu-main col col-span-6">
+            <section class="demo-menu-grid row row-phone row-tablet" aria-label="Drink items">
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">0–140 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Sparkling Water</h2>
+                    <p class="demo-menu-desc">Lime or plain, chilled.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Can</a>
+                      <a class="demo-pill" href="#">Bottle</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $2.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">120–220 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Cola</h2>
+                    <p class="demo-menu-desc">Classic cola, served cold.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Can</a>
+                      <a class="demo-pill" href="#">Bottle</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $2.75 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">110–210 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Ginger Ale</h2>
+                    <p class="demo-menu-desc">Bright ginger bite, lightly sweet.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Can</a>
+                      <a class="demo-pill" href="#">Bottle</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $2.75 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">90–160 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Lemon Iced Tea</h2>
+                    <p class="demo-menu-desc">Brewed tea, lemon, lightly sweet.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Small</a>
+                      <a class="demo-pill" href="#">Large</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $3.50 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">80–150 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Orange Soda</h2>
+                    <p class="demo-menu-desc">Citrus pop with a bright finish.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Can</a>
+                      <a class="demo-pill" href="#">Bottle</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $2.75 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">0–5 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Diet Cola</h2>
+                    <p class="demo-menu-desc">Zero sugar, crisp cola taste.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Can</a>
+                      <a class="demo-pill" href="#">Bottle</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $2.75 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">70–130 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">House Lemonade</h2>
+                    <p class="demo-menu-desc">Fresh lemon, cane sugar, ice.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Small</a>
+                      <a class="demo-pill" href="#">Large</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $3.95 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">60–110 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Cold Brew Coffee</h2>
+                    <p class="demo-menu-desc">Smooth, strong, served over ice.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Small</a>
+                      <a class="demo-pill" href="#">Large</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $4.25 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo-menu-item col">
+                <div class="demo-menu-card">
+                  <div class="demo-menu-media">
+                    <img src="./assets/pizza-placeholder.svg" alt="" />
+                    <span class="demo-menu-kcal">0–2 cals</span>
+                  </div>
+                  <div class="demo-menu-body">
+                    <h2 class="demo-menu-name">Bottled Water</h2>
+                    <p class="demo-menu-desc">Still water, chilled.</p>
+                    <div class="demo-menu-options" aria-label="Size options">
+                      <span class="demo-menu-options-label">Size</span>
+                      <a class="demo-pill is-selected" href="#">Bottle</a>
+                    </div>
+                  </div>
+                  <div class="demo-menu-footer">
+                    <p class="demo-menu-price">Price: $2.25 CAD</p>
+                    <button class="btn btn-primary btn-sm demo-menu-cta" type="button">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </main>
+
+          <aside class="demo-cart col col-span-3" aria-label="Cart">
+            <section class="demo-cart-card">
+              <header class="demo-cart-header">
+                <h2 class="demo-cart-title">Your Cart</h2>
+                <p class="demo-cart-count"><span data-cart-count>3</span> items</p>
+              </header>
+
+              <ul class="demo-cart-list" aria-label="Cart items" data-cart-list>
+                <li class="demo-cart-item" data-cart-item data-unit-price="10.95" data-qty="1">
+                  <div class="demo-cart-thumb" aria-hidden="true"></div>
+                  <div class="demo-cart-meta">
+                    <p class="demo-cart-name">Kingston Classic</p>
+                    <p class="demo-cart-sub">Medium 12"</p>
+                  </div>
+                  <div class="demo-cart-right">
+                    <p class="demo-cart-price" data-line-price>$10.95</p>
+                    <div class="demo-cart-qty" aria-label="Quantity controls">
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+                      <span class="demo-cart-qty-value" data-qty-value>1</span>
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-plus aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn btn-secondary btn-sm demo-cart-remove" type="button" data-remove>Remove</button>
+                  </div>
+                </li>
+
+                <li class="demo-cart-item" data-cart-item data-unit-price="13.95" data-qty="2">
+                  <div class="demo-cart-thumb" aria-hidden="true"></div>
+                  <div class="demo-cart-meta">
+                    <p class="demo-cart-name">North Tropic</p>
+                    <p class="demo-cart-sub">Large 14"</p>
+                  </div>
+                  <div class="demo-cart-right">
+                    <p class="demo-cart-price" data-line-price>$27.90</p>
+                    <div class="demo-cart-qty" aria-label="Quantity controls">
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+                      <span class="demo-cart-qty-value" data-qty-value>2</span>
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-plus aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn btn-secondary btn-sm demo-cart-remove" type="button" data-remove>Remove</button>
+                  </div>
+                </li>
+
+                <li class="demo-cart-item" data-cart-item data-unit-price="16.95" data-qty="1">
+                  <div class="demo-cart-thumb" aria-hidden="true"></div>
+                  <div class="demo-cart-meta">
+                    <p class="demo-cart-name">Banff Pizza</p>
+                    <p class="demo-cart-sub">XL 16"</p>
+                  </div>
+                  <div class="demo-cart-right">
+                    <p class="demo-cart-price" data-line-price>$16.95</p>
+                    <div class="demo-cart-qty" aria-label="Quantity controls">
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+                      <span class="demo-cart-qty-value" data-qty-value>1</span>
+                      <button class="btn btn-secondary btn-sm demo-cart-qty-btn" type="button" data-qty-plus aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn btn-secondary btn-sm demo-cart-remove" type="button" data-remove>Remove</button>
+                  </div>
+                </li>
+              </ul>
+              <p class="demo-cart-empty" data-cart-empty hidden>Cart is empty.</p>
+
+              <div class="demo-cart-summary" aria-label="Cart totals">
+                <div class="demo-cart-row">
+                  <span>Subtotal</span>
+                  <span data-subtotal>$55.80</span>
+                </div>
+                <div class="demo-cart-row">
+                  <span>Tax</span>
+                  <span data-tax>$7.25</span>
+                </div>
+                <div class="demo-cart-row demo-cart-row--total">
+                  <span>Total</span>
+                  <span data-total>$63.05</span>
+                </div>
+              </div>
+
+              <div class="demo-cart-actions">
+                <button class="btn btn-primary btn-lg demo-cart-checkout" type="button">Checkout</button>
+                <button class="btn btn-secondary btn-md demo-cart-clear" type="button" data-clear>Clear cart</button>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <script src="./cart.js" defer></script>
+  </body>
+</html>
