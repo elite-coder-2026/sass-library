@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "0.0.2",
+  "description": "sim0ple backend for a test app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  },
+  "author": "darrell parkhouse",
+  "license": "MIT"
+}
