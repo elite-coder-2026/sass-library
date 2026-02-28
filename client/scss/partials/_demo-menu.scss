@@ -1,7 +1,7 @@
 @use "sass:map";
-@use "./vars" as v;
-@use "./grid" as g;
-@use "../mixins" as *;
+@use "vars" as v;
+@use "grid" as g;
+@use "../mixins/index" as *;
 
 .demo-menu {
   background: v.token(colors, bg, subtle);

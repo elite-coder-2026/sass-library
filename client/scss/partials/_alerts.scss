@@ -1,0 +1,274 @@
+@use "sass:map";
+@use "vars" as v;
+@use "../mixins/index" as *;
+
+$alert-variants: (
+  info: (
+    bg: v.token(colors, brand, 50),
+    border: v.token(colors, brand, 200),
+    text: v.token(colors, text, primary),
+    accent: v.token(colors, brand, 600)
+  ),
+  success: (
+    bg: v.token(colors, success, 50),
+    border: v.token(colors, success, 200),
+    text: v.token(colors, text, primary),
+    accent: v.token(colors, success, 700)
+  ),
+  warning: (
+    bg: v.token(colors, warning, 50),
+    border: v.token(colors, warning, 200),
+    text: v.token(colors, text, primary),
+    accent: v.token(colors, warning, 700)
+  ),
+  danger: (
+    bg: v.token(colors, danger, 50),
+    border: v.token(colors, danger, 200),
+    text: v.token(colors, text, primary),
+    accent: v.token(colors, danger, 700)
+  ),
+  neutral: (
+    bg: v.token(colors, neutral, 50),
+    border: v.token(colors, border, subtle),
+    text: v.token(colors, text, primary),
+    accent: v.token(colors, neutral, 700)
+  )
+) !default;
+
+@mixin _alert-variant($name) {
+  $variant: map.get($alert-variants, $name);
+
+  @if $variant == null {
+    @error "Unknown alert variant `#{$name}`. Expected one of: #{map.keys($alert-variants)}.";
+  }
+
+  background: map.get($variant, bg);
+  border-color: map.get($variant, border);
+  color: map.get($variant, text);
+
+  &::before {
+    background: map.get($variant, accent);
+  }
+}
+
+.alert {
+  align-items: flex-start;
+  background: v.token(colors, bg, canvas);
+  border: 1px solid v.token(colors, border, subtle);
+  border-radius: v.radius(lg);
+  box-shadow: v.shadow(sm);
+  color: v.token(colors, text, primary);
+  display: grid;
+  gap: v.space(2);
+  padding: v.space(4);
+  position: relative;
+}
+
+.alert::before {
+  border-radius: v.radius(pill);
+  content: "";
+  height: calc(100% - #{v.space(3)});
+  left: v.space(2);
+  position: absolute;
+  top: v.space(2);
+  width: 0.25rem;
+}
+
+.alert__title {
+  font-size: v.type-size(md);
+  font-weight: v.token(typography, weight, semibold);
+  line-height: v.type-line-height(md);
+  margin: 0;
+  padding-left: v.space(3);
+}
+
+.alert__text {
+  font-size: v.type-size(md);
+  line-height: v.type-line-height(md);
+  margin: 0;
+  padding-left: v.space(3);
+}
+
+.alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.space(2);
+  padding-left: v.space(3);
+}
+
+.alert--info {
+  @include _alert-variant(info);
+}
+
+.alert--success {
+  @include _alert-variant(success);
+}
+
+.alert--warning {
+  @include _alert-variant(warning);
+}
+
+.alert--danger {
+  @include _alert-variant(danger);
+}
+
+.alert--neutral {
+  @include _alert-variant(neutral);
+}
+
+.toast-container {
+  bottom: v.space(4);
+  display: flex;
+  flex-direction: column;
+  gap: v.space(2);
+  max-width: min(26rem, calc(100vw - #{v.space(6)}));
+  position: fixed;
+  right: v.space(4);
+  z-index: 1000;
+}
+
+.toast {
+  background: v.token(colors, bg, canvas);
+  border: 1px solid v.token(colors, border, subtle);
+  border-radius: v.radius(lg);
+  box-shadow: v.shadow(lg);
+  color: v.token(colors, text, primary);
+  display: grid;
+  gap: v.space(2);
+  grid-template-columns: 1fr auto;
+  overflow: hidden;
+  padding: v.space(3) v.space(3);
+  position: relative;
+  transform: translateY(0.5rem);
+  opacity: 0;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@include reduced-motion {
+  .toast {
+    transition: none;
+  }
+}
+
+.toast::before {
+  content: "";
+  inset: 0 auto 0 0;
+  position: absolute;
+  width: 0.25rem;
+  background: v.token(colors, brand, 600);
+}
+
+.toast[data-variant="success"]::before {
+  background: map.get(map.get($alert-variants, success), accent);
+}
+
+.toast[data-variant="warning"]::before {
+  background: map.get(map.get($alert-variants, warning), accent);
+}
+
+.toast[data-variant="danger"]::before {
+  background: map.get(map.get($alert-variants, danger), accent);
+}
+
+.toast[data-variant="info"]::before {
+  background: map.get(map.get($alert-variants, info), accent);
+}
+
+.toast[data-variant="neutral"]::before {
+  background: map.get(map.get($alert-variants, neutral), accent);
+}
+
+.toast__body {
+  padding-left: v.space(3);
+}
+
+.toast__title {
+  font-size: v.type-size(md);
+  font-weight: v.token(typography, weight, semibold);
+  margin: 0;
+}
+
+.toast__message {
+  font-size: v.type-size(sm);
+  line-height: v.type-line-height(md);
+  margin: v.space(1) 0 0;
+  color: v.token(colors, text, secondary);
+}
+
+.toast__close {
+  @include button-reset;
+  @include tap-highlight-none;
+  border-radius: v.radius(md);
+  color: v.token(colors, text, muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin-left: v.space(2);
+}
+
+.toast__close:hover {
+  background: v.token(colors, neutral, 100);
+  color: v.token(colors, text, primary);
+}
+
+.toast__progress {
+  background: v.token(colors, border, subtle);
+  height: 0.1875rem;
+  inset: auto 0 0 0;
+  position: absolute;
+}
+
+.toast__progress::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(1);
+  background: v.token(colors, brand, 600);
+  animation: toast-progress linear var(--toast-duration, 0ms) forwards;
+}
+
+.toast[data-variant="success"] .toast__progress::before {
+  background: map.get(map.get($alert-variants, success), accent);
+}
+
+.toast[data-variant="warning"] .toast__progress::before {
+  background: map.get(map.get($alert-variants, warning), accent);
+}
+
+.toast[data-variant="danger"] .toast__progress::before {
+  background: map.get(map.get($alert-variants, danger), accent);
+}
+
+.toast[data-variant="info"] .toast__progress::before {
+  background: map.get(map.get($alert-variants, info), accent);
+}
+
+.toast[data-variant="neutral"] .toast__progress::before {
+  background: map.get(map.get($alert-variants, neutral), accent);
+}
+
+@include reduced-motion {
+  .toast__progress::before {
+    animation: none;
+  }
+}
+
+@keyframes toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+

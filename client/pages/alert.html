@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Alerts + Toast</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+    <link rel="stylesheet" href="../scss/alerts.css" />
+    <script src="alert.js" defer></script>
+  </head>
+  <body>
+    <div class="demo-menu">
+      <div class="demo-menu-shell">
+        <header class="demo-menu-header">
+          <h1 class="demo-menu-title">Alerts + Toast</h1>
+          <p class="demo-menu-subtitle">Inline alerts + a lightweight toast component.</p>
+        </header>
+
+        <section class="demo-menu-note">
+          <strong>Tip:</strong> Click any button below to trigger a toast. (Styles compile from `scss/partials/_alerts.scss`.)
+        </section>
+
+        <div class="demo-menu-layout row">
+          <aside class="demo-menu-sidebar col col-span-3">
+            <nav class="demo-menu-nav" aria-label="Menu categories">
+              <p class="demo-menu-nav-title">Our demos</p>
+              <ul class="demo-menu-nav-list">
+                <li><a class="demo-menu-nav-link" href="menu.html">Pizza</a></li>
+                <li><a class="demo-menu-nav-link" href="combos.html">Combos</a></li>
+                <li><a class="demo-menu-nav-link" href="burgers.html">Burgers</a></li>
+                <li><a class="demo-menu-nav-link" href="drinks.html">Drinks</a></li>
+                <li><a class="demo-menu-nav-link" href="orders-table.html">Orders</a></li>
+                <li><a class="demo-menu-nav-link" href="receipt.html">Receipt</a></li>
+                <li><a class="demo-menu-nav-link" href="other-tables.html">Bookkeeping</a></li>
+                <li><a class="demo-menu-nav-link" href="./alert.html" aria-current="page">Alerts + Toast</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <main class="demo-menu-main col col-span-9">
+            <section class="demo-menu-grid row row-phone row-tablet" aria-label="Alert examples">
+              <article class="col col-span-12">
+                <div class="alert alert--info" role="status">
+                  <h2 class="alert__title">Info</h2>
+                  <p class="alert__text">We’ve updated a few menu items for the season.</p>
+                  <div class="alert__actions">
+                    <a class="btn btn-secondary btn-sm" href="menu.html">View menu</a>
+                    <button class="btn btn-primary btn-sm" type="button" data-toast data-variant="info" data-title="Heads up" data-message="This is an info toast.">
+                      Show toast
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col col-span-6">
+                <div class="alert alert--success" role="status">
+                  <h2 class="alert__title">Success</h2>
+                  <p class="alert__text">Your changes have been saved.</p>
+                  <div class="alert__actions">
+                    <button class="btn btn-primary btn-sm" type="button" data-toast data-variant="success" data-title="Saved" data-message="Everything is up to date.">
+                      Show toast
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col col-span-6">
+                <div class="alert alert--warning" role="status">
+                  <h2 class="alert__title">Warning</h2>
+                  <p class="alert__text">You’re about to overwrite an existing order.</p>
+                  <div class="alert__actions">
+                    <button class="btn btn-secondary btn-sm" type="button">Cancel</button>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      type="button"
+                      data-toast
+                      data-variant="warning"
+                      data-title="Careful"
+                      data-message="This is a warning toast."
+                    >
+                      Show toast
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col col-span-12">
+                <div class="alert alert--danger" role="alert">
+                  <h2 class="alert__title">Danger</h2>
+                  <p class="alert__text">Payment failed. Please try another card.</p>
+                  <div class="alert__actions">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      type="button"
+                      data-toast
+                      data-variant="danger"
+                      data-title="Payment failed"
+                      data-message="Your card was declined. Please try again."
+                      data-duration="6500"
+                    >
+                      Show toast
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col col-span-12">
+                <div class="alert alert--neutral" role="status">
+                  <h2 class="alert__title">Neutral</h2>
+                  <p class="alert__text">This toast won’t auto-dismiss.</p>
+                  <div class="alert__actions">
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      type="button"
+                      data-toast
+                      data-variant="neutral"
+                      data-title="Pinned"
+                      data-message="Duration 0 disables auto-dismiss."
+                      data-duration="0"
+                    >
+                      Show toast
+                    </button>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

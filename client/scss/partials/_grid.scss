@@ -1,6 +1,6 @@
 @use "sass:math";
 @use "sass:meta";
-@use "./vars" as v;
+@use "vars" as v;
 
 $grid-columns: 12 !default;
 $grid-gutter: v.space(4) !default;

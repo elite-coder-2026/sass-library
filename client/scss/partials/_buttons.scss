@@ -1,6 +1,6 @@
 @use "sass:map";
-@use "./vars" as v;
-@use "../mixins" as *;
+@use "vars" as v;
+@use "../mixins/index" as *;
 
 
 $button-variants: (

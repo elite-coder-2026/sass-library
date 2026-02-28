@@ -50,7 +50,7 @@
 
       const v = Math.round((total / max) * 100);
       const bar = document.createElement("div");
-      bar.className = "demo-bar";
+      bar.className = "pages-bar";
       bar.style.setProperty("--v", String(v));
 
       const label = document.createElement("span");
@@ -68,10 +68,10 @@
     if (rows.length === 0) return;
 
     const svg = expenseDonut.querySelector("svg");
-    const legend = expenseDonut.querySelector(".demo-donut-legend");
-    const segA = expenseDonut.querySelector(".demo-donut-seg--a");
-    const segB = expenseDonut.querySelector(".demo-donut-seg--b");
-    const segC = expenseDonut.querySelector(".demo-donut-seg--c");
+    const legend = expenseDonut.querySelector(".pages-donut-legend");
+    const segA = expenseDonut.querySelector(".pages-donut-seg--a");
+    const segB = expenseDonut.querySelector(".pages-donut-seg--b");
+    const segC = expenseDonut.querySelector(".pages-donut-seg--c");
 
     if (!svg || !legend || !segA || !segB || !segC) return;
 
