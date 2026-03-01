@@ -1,4 +1,4 @@
--- queries.sql
+-- queries.ts.sql
 -- Utility SQL to pull *all rows* from a real database when you don't yet know the schema.
 -- Pick the section that matches your database (Postgres / MySQL / SQLite).
 
