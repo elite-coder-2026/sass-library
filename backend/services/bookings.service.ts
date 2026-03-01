@@ -1,4 +1,14 @@
+import { bookings } from "../utility/queries";
 import { query } from "../utility/db";
+export class BookingConflictError extends Error {
+  conflictBookingId: number;
+
+  constructor(conflictBookingId: number) {
+    super("booking time conflicts with an existing booking");
+    this.name = "BookingConflictError";
+    this.conflictBookingId = conflictBookingId;
+  }
+}
 
 export type Booking = {
   id: number;
@@ -62,9 +72,49 @@ function toBooking(row: BookingRow): Booking {
   };
 }
 
+function assertValidRange(startsAt: string, endsAt: string) {
+  const startMs = new Date(startsAt).getTime();
+  const endMs = new Date(endsAt).getTime();
+  if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || endMs <= startMs) {
+    throw new Error("invalid booking time range");
+  }
+}
+
+export async function ensureBookingNotDoubleBooked(options: {
+  stylistId: number;
+  startsAt: string;
+  endsAt: string;
+  ignoreBookingId?: number;
+  ignoreStatus?: string;
+}) {
+  const result = await query<{ id: number }>(
+    "select id from cs.bookings where stylist_id = $1 and status <> $5 and ($4::bigint is null or id <> $4) and starts_at < $3 and ends_at > $2 limit 1",
+    [
+      options.stylistId,
+      options.startsAt,
+      options.endsAt,
+      options.ignoreBookingId ?? null,
+      options.ignoreStatus ?? "canceled"
+    ]
+  );
+
+  const row = result.rows[0];
+  if (row) throw new BookingConflictError(row.id);
+}
+
 export async function createBooking(input: CreateBookingInput): Promise<Booking> {
+  assertValidRange(input.startsAt, input.endsAt);
+  const nextStatus = input.status ?? "scheduled";
+  if (nextStatus !== "canceled") {
+    await ensureBookingNotDoubleBooked({
+      stylistId: input.stylistId,
+      startsAt: input.startsAt,
+      endsAt: input.endsAt
+    });
+  }
+
   const result = await query<BookingRow>(
-    "insert into bookings (user_id, stylist_id, starts_at, ends_at, status, notes) values ($1, $2, $3, $4, $5, $6) returning id, user_id, stylist_id, starts_at, ends_at, status, notes, created_at, updated_at",
+    bookings.createBooking,
     [
       input.userId,
       input.stylistId,
@@ -80,7 +130,7 @@ export async function createBooking(input: CreateBookingInput): Promise<Booking>
 
 export async function getBookingById(id: number): Promise<Booking | null> {
   const result = await query<BookingRow>(
-    "select id, user_id, stylist_id, starts_at, ends_at, status, notes, created_at, updated_at from bookings where id = $1",
+    "select id, user_id, stylist_id, starts_at, ends_at, status, notes, created_at, updated_at from cs.bookings where id = $1",
     [id]
   );
 
@@ -120,7 +170,7 @@ export async function listBookings(options?: {
   values.push(offset);
 
   const sql =
-    "select id, user_id, stylist_id, starts_at, ends_at, status, notes, created_at, updated_at from bookings" +
+    "select id, user_id, stylist_id, starts_at, ends_at, status, notes, created_at, updated_at from cs.bookings" +
     (where.length ? ` where ${where.join(" and ")}` : "") +
     ` order by starts_at desc limit $${values.length - 1} offset $${values.length}`;
 
@@ -129,6 +179,30 @@ export async function listBookings(options?: {
 }
 
 export async function updateBooking(id: number, patch: UpdateBookingInput): Promise<Booking | null> {
+  const current = await getBookingById(id);
+  if (!current) return null;
+
+  const next = {
+    userId: patch.userId ?? current.userId,
+    stylistId: patch.stylistId ?? current.stylistId,
+    startsAt: patch.startsAt ?? current.startsAt,
+    endsAt: patch.endsAt ?? current.endsAt,
+    status: patch.status ?? current.status
+  };
+
+  const rangeTouched = patch.startsAt !== undefined || patch.endsAt !== undefined || patch.stylistId !== undefined || patch.status !== undefined;
+  if (rangeTouched) {
+    assertValidRange(next.startsAt, next.endsAt);
+    if (next.status !== "canceled") {
+      await ensureBookingNotDoubleBooked({
+        stylistId: next.stylistId,
+        startsAt: next.startsAt,
+        endsAt: next.endsAt,
+        ignoreBookingId: id
+      });
+    }
+  }
+
   const sets: string[] = [];
   const values: unknown[] = [];
 
@@ -162,11 +236,11 @@ export async function updateBooking(id: number, patch: UpdateBookingInput): Prom
     sets.push(`notes = $${values.length}`);
   }
 
-  if (sets.length === 0) return getBookingById(id);
+  if (sets.length === 0) return current;
 
   values.push(id);
   const result = await query<BookingRow>(
-    `update bookings set ${sets.join(", ")}, updated_at = now() where id = $${values.length} returning id, user_id, stylist_id, starts_at, ends_at, status, notes, created_at, updated_at`,
+    `update cs.bookings set ${sets.join(", ")}, updated_at = now() where id = $${values.length}`,
     values
   );
 
@@ -175,7 +249,6 @@ export async function updateBooking(id: number, patch: UpdateBookingInput): Prom
 }
 
 export async function deleteBooking(id: number): Promise<boolean> {
-  const result = await query<{ id: number }>("delete from bookings where id = $1 returning id", [id]);
+  const result = await query<{ id: number }>("delete from cs.bookings where id = $1 returning id", [id]);
   return result.rowCount === 1;
 }
-
