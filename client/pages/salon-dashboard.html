@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Salon Dashboard</title>
+    <link rel="stylesheet" href="../scss/app.css" />
+    <style>
+      :root {
+        color-scheme: light;
+        --dash-bg: #0b1220;
+        --dash-panel: rgba(255, 255, 255, 0.06);
+        --dash-panel-2: rgba(255, 255, 255, 0.09);
+        --dash-border: rgba(255, 255, 255, 0.12);
+        --dash-text: rgba(255, 255, 255, 0.92);
+        --dash-muted: rgba(255, 255, 255, 0.7);
+        --dash-soft: rgba(255, 255, 255, 0.04);
+        --dash-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        --dash-radius: 16px;
+        --dash-gap: 1rem;
+        --dash-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
+        --dash-accent: #7c3aed;
+        --dash-good: #22c55e;
+        --dash-warn: #f59e0b;
+        --dash-bad: #ef4444;
+        --dash-blue: #60a5fa;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--dash-font);
+        background: radial-gradient(1200px 600px at 20% 0%, rgba(124, 58, 237, 0.22), transparent 60%),
+          radial-gradient(1000px 500px at 90% 10%, rgba(96, 165, 250, 0.18), transparent 55%),
+          radial-gradient(900px 500px at 50% 110%, rgba(34, 197, 94, 0.12), transparent 55%),
+          var(--dash-bg);
+        color: var(--dash-text);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .dash-skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        padding: 0.75rem 1rem;
+        background: #111827;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 12px;
+        z-index: 10;
+      }
+      .dash-skip:focus {
+        left: 1rem;
+        top: 1rem;
+      }
+
+      .dash-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .dash-header {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 1.25rem;
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+        box-shadow: var(--dash-shadow);
+      }
+
+      .dash-title {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+      }
+
+      .dash-subtitle {
+        margin: 0.4rem 0 0;
+        color: var(--dash-muted);
+        font-size: 0.95rem;
+      }
+
+      .dash-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        min-width: 320px;
+      }
+
+      .dash-field {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .dash-label {
+        font-size: 0.8rem;
+        color: var(--dash-muted);
+      }
+
+      .dash-input,
+      .dash-select {
+        appearance: none;
+        font: inherit;
+        color: var(--dash-text);
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 12px;
+        padding: 0.55rem 0.75rem;
+        min-height: 2.35rem;
+      }
+
+      .dash-input:focus,
+      .dash-select:focus {
+        outline: 2px solid rgba(124, 58, 237, 0.55);
+        outline-offset: 2px;
+        border-color: rgba(124, 58, 237, 0.5);
+      }
+
+      .dash-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .dash-btn {
+        cursor: pointer;
+        font: inherit;
+        color: var(--dash-text);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 0.55rem 0.8rem;
+        min-height: 2.35rem;
+        transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+      }
+      .dash-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .dash-btn:active {
+        transform: translateY(1px);
+      }
+      .dash-btn-primary {
+        border-color: rgba(124, 58, 237, 0.55);
+        background: rgba(124, 58, 237, 0.22);
+      }
+      .dash-btn-primary:hover {
+        background: rgba(124, 58, 237, 0.3);
+      }
+
+      .dash-section {
+        margin-top: 1.25rem;
+      }
+
+      .dash-h2 {
+        margin: 0 0 0.8rem;
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+      }
+
+      .dash-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: var(--dash-gap);
+      }
+
+      .dash-card {
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+      }
+
+      .dash-card-inner {
+        padding: 1rem;
+      }
+
+      .dash-kpi {
+        display: grid;
+        gap: 0.3rem;
+      }
+
+      .dash-kpi-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .dash-kpi-label {
+        font-size: 0.85rem;
+        color: var(--dash-muted);
+      }
+
+      .dash-kpi-value {
+        font-size: 1.5rem;
+        letter-spacing: -0.03em;
+        margin: 0;
+      }
+
+      .dash-kpi-delta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.82rem;
+        color: var(--dash-muted);
+      }
+
+      .dash-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border-radius: 999px;
+        padding: 0.25rem 0.55rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.18);
+        font-size: 0.78rem;
+        color: var(--dash-muted);
+        white-space: nowrap;
+      }
+
+      .dash-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--dash-accent);
+        box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.16);
+      }
+      .dash-dot.good {
+        background: var(--dash-good);
+        box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.14);
+      }
+      .dash-dot.warn {
+        background: var(--dash-warn);
+        box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.14);
+      }
+      .dash-dot.bad {
+        background: var(--dash-bad);
+        box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.14);
+      }
+
+      .dash-span-3 {
+        grid-column: span 3;
+      }
+      .dash-span-4 {
+        grid-column: span 4;
+      }
+      .dash-span-5 {
+        grid-column: span 5;
+      }
+      .dash-span-6 {
+        grid-column: span 6;
+      }
+      .dash-span-7 {
+        grid-column: span 7;
+      }
+      .dash-span-8 {
+        grid-column: span 8;
+      }
+      .dash-span-12 {
+        grid-column: span 12;
+      }
+
+      .dash-chart-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.75rem;
+      }
+
+      .dash-meta {
+        color: var(--dash-muted);
+        font-size: 0.85rem;
+      }
+
+      .dash-chart {
+        height: 280px;
+        padding: 0.5rem 1rem 1rem;
+      }
+
+      .dash-chart svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .dash-table-wrap {
+        overflow: auto;
+      }
+
+      .dash-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 740px;
+      }
+
+      .dash-table th,
+      .dash-table td {
+        padding: 0.75rem 0.85rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.92rem;
+      }
+
+      .dash-table th {
+        position: sticky;
+        top: 0;
+        background: rgba(20, 26, 42, 0.9);
+        backdrop-filter: blur(8px);
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 650;
+        z-index: 1;
+      }
+
+      .dash-table tr:hover td {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .dash-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.22rem 0.5rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.18);
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.82);
+        white-space: nowrap;
+      }
+
+      .dash-badge.good {
+        border-color: rgba(34, 197, 94, 0.28);
+        background: rgba(34, 197, 94, 0.12);
+      }
+      .dash-badge.warn {
+        border-color: rgba(245, 158, 11, 0.28);
+        background: rgba(245, 158, 11, 0.12);
+      }
+      .dash-badge.bad {
+        border-color: rgba(239, 68, 68, 0.28);
+        background: rgba(239, 68, 68, 0.12);
+      }
+
+      .dash-footer {
+        margin-top: 1.25rem;
+        color: var(--dash-muted);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 64rem) {
+        .dash-controls {
+          min-width: 0;
+        }
+        .dash-span-3 {
+          grid-column: span 6;
+        }
+        .dash-span-4,
+        .dash-span-5,
+        .dash-span-6,
+        .dash-span-7,
+        .dash-span-8 {
+          grid-column: span 12;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="dash-skip" href="#main">Skip to dashboard</a>
+
+    <div class="dash-shell">
+      <header class="dash-header">
+        <div>
+          <h1 class="dash-title">Salon Dashboard</h1>
+          <p class="dash-subtitle">
+            A self-contained demo dashboard (charts + tables). Wire it to your API/DB when ready.
+          </p>
+        </div>
+
+        <form class="dash-controls" id="controls" aria-label="Dashboard controls">
+          <div class="dash-field">
+            <label class="dash-label" for="range">Date range</label>
+            <select class="dash-select" id="range" name="range">
+              <option value="7">Last 7 days</option>
+              <option value="14">Last 14 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="90">Last 90 days</option>
+            </select>
+          </div>
+
+          <div class="dash-field">
+            <label class="dash-label" for="location">Location</label>
+            <select class="dash-select" id="location" name="location">
+              <option value="all" selected>All</option>
+              <option value="downtown">Downtown</option>
+              <option value="north">North</option>
+              <option value="west">West</option>
+            </select>
+          </div>
+
+          <div class="dash-actions">
+            <button class="dash-btn dash-btn-primary" type="submit">Apply</button>
+            <button class="dash-btn" type="button" id="randomize">Randomize</button>
+          </div>
+        </form>
+      </header>
+
+      <main id="main" class="dash-section" tabindex="-1">
+        <section class="dash-section" aria-label="Key performance indicators">
+          <div class="dash-grid">
+            <div class="dash-card dash-span-3">
+              <div class="dash-card-inner dash-kpi">
+                <div class="dash-kpi-top">
+                  <div class="dash-kpi-label">Revenue</div>
+                  <span class="dash-pill" id="kpiRevenuePill"><span class="dash-dot"></span> Trending</span>
+                </div>
+                <p class="dash-kpi-value" id="kpiRevenue">$0</p>
+                <div class="dash-kpi-delta" id="kpiRevenueDelta">—</div>
+              </div>
+            </div>
+
+            <div class="dash-card dash-span-3">
+              <div class="dash-card-inner dash-kpi">
+                <div class="dash-kpi-top">
+                  <div class="dash-kpi-label">Bookings</div>
+                  <span class="dash-pill"><span class="dash-dot good"></span> Completed</span>
+                </div>
+                <p class="dash-kpi-value" id="kpiBookings">0</p>
+                <div class="dash-kpi-delta" id="kpiBookingsDelta">—</div>
+              </div>
+            </div>
+
+            <div class="dash-card dash-span-3">
+              <div class="dash-card-inner dash-kpi">
+                <div class="dash-kpi-top">
+                  <div class="dash-kpi-label">Utilization</div>
+                  <span class="dash-pill"><span class="dash-dot warn"></span> Chair time</span>
+                </div>
+                <p class="dash-kpi-value" id="kpiUtil">0%</p>
+                <div class="dash-kpi-delta" id="kpiUtilDelta">—</div>
+              </div>
+            </div>
+
+            <div class="dash-card dash-span-3">
+              <div class="dash-card-inner dash-kpi">
+                <div class="dash-kpi-top">
+                  <div class="dash-kpi-label">Active subs</div>
+                  <span class="dash-pill"><span class="dash-dot good"></span> Memberships</span>
+                </div>
+                <p class="dash-kpi-value" id="kpiActiveSubs">0</p>
+                <div class="dash-kpi-delta" id="kpiActiveSubsDelta">—</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-section" aria-label="Charts">
+          <div class="dash-grid">
+            <div class="dash-card dash-span-8" aria-label="Revenue chart">
+              <div class="dash-card-inner">
+                <div class="dash-chart-head">
+                  <h2 class="dash-h2">Revenue over time</h2>
+                  <div class="dash-meta" id="metaRevenue">—</div>
+                </div>
+              </div>
+              <div class="dash-chart" id="chartRevenue" role="img" aria-label="Line chart showing revenue over time"></div>
+            </div>
+
+            <div class="dash-card dash-span-4" aria-label="Subscription breakdown chart">
+              <div class="dash-card-inner">
+                <div class="dash-chart-head">
+                  <h2 class="dash-h2">Subscriptions</h2>
+                  <div class="dash-meta" id="metaSubs">—</div>
+                </div>
+              </div>
+              <div
+                class="dash-chart"
+                id="chartSubs"
+                role="img"
+                aria-label="Donut chart showing subscription status breakdown"
+              ></div>
+            </div>
+
+            <div class="dash-card dash-span-12" aria-label="Bookings chart">
+              <div class="dash-card-inner">
+                <div class="dash-chart-head">
+                  <h2 class="dash-h2">Bookings by stylist</h2>
+                  <div class="dash-meta" id="metaBookings">—</div>
+                </div>
+              </div>
+              <div
+                class="dash-chart"
+                id="chartBookings"
+                role="img"
+                aria-label="Bar chart showing bookings per stylist"
+              ></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-section" aria-label="Tables">
+          <div class="dash-grid">
+            <div class="dash-card dash-span-7">
+              <div class="dash-card-inner">
+                <div class="dash-chart-head">
+                  <h2 class="dash-h2">Upcoming appointments</h2>
+                  <div class="dash-meta">Next 8</div>
+                </div>
+              </div>
+              <div class="dash-table-wrap">
+                <table class="dash-table" aria-label="Upcoming appointments table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Starts</th>
+                      <th scope="col">Client</th>
+                      <th scope="col">Stylist</th>
+                      <th scope="col">Service</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblUpcoming"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="dash-card dash-span-5">
+              <div class="dash-card-inner">
+                <div class="dash-chart-head">
+                  <h2 class="dash-h2">Top products (30d)</h2>
+                  <div class="dash-meta">Units + revenue</div>
+                </div>
+              </div>
+              <div class="dash-table-wrap">
+                <table class="dash-table" aria-label="Top products table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Product</th>
+                      <th scope="col">SKU</th>
+                      <th scope="col">Units</th>
+                      <th scope="col">Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblProducts"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="dash-card dash-span-12">
+              <div class="dash-card-inner">
+                <div class="dash-chart-head">
+                  <h2 class="dash-h2">Subscription health</h2>
+                  <div class="dash-meta">Latest by customer</div>
+                </div>
+              </div>
+              <div class="dash-table-wrap">
+                <table class="dash-table" aria-label="Subscriptions table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Customer</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Plan</th>
+                      <th scope="col">Period end</th>
+                      <th scope="col">Provider</th>
+                      <th scope="col">Provider sub id</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSubs"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="dash-footer">
+          Tip: swap the demo arrays in <code>&lt;script&gt;</code> with API calls, then pass real data into
+          <code>renderDashboard()</code>.
+        </p>
+      </main>
+    </div>
+
+    <script>
+      const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+      const number = new Intl.NumberFormat("en-US");
+      const percent0 = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 0 });
+
+      function clamp(n, min, max) {
+        return Math.max(min, Math.min(max, n));
+      }
+
+      function svgEl(name, attrs = {}) {
+        const el = document.createElementNS("http://www.w3.org/2000/svg", name);
+        for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
+        return el;
+      }
+
+      function clear(el) {
+        while (el.firstChild) el.removeChild(el.firstChild);
+      }
+
+      function fmtDelta(current, previous, unit = "") {
+        if (previous === 0) return "—";
+        const d = (current - previous) / previous;
+        const sign = d > 0 ? "+" : "";
+        return `${sign}${(d * 100).toFixed(1)}% vs prior ${unit}`.trim();
+      }
+
+      function addBadge(text, tone) {
+        const span = document.createElement("span");
+        span.className = `dash-badge ${tone || ""}`.trim();
+        span.textContent = text;
+        return span;
+      }
+
+      function sparkColorForDelta(d) {
+        if (d >= 0.08) return { dot: "good", pill: "good" };
+        if (d <= -0.08) return { dot: "bad", pill: "bad" };
+        return { dot: "", pill: "" };
+      }
+
+      function renderLineChart(target, { labels, values, stroke = "#60a5fa", fill = "rgba(96,165,250,0.16)" }) {
+        clear(target);
+        const width = 1000;
+        const height = 360;
+        const padding = { top: 28, right: 24, bottom: 42, left: 54 };
+        const innerW = width - padding.left - padding.right;
+        const innerH = height - padding.top - padding.bottom;
+        const svg = svgEl("svg", { viewBox: `0 0 ${width} ${height}`, role: "img" });
+
+        const minV = Math.min(...values);
+        const maxV = Math.max(...values);
+        const span = maxV - minV || 1;
+
+        const x = (i) => padding.left + (innerW * i) / Math.max(1, values.length - 1);
+        const y = (v) => padding.top + innerH - (innerH * (v - minV)) / span;
+
+        const grid = svgEl("g", { opacity: "0.9" });
+        const gridLines = 4;
+        for (let i = 0; i <= gridLines; i++) {
+          const yy = padding.top + (innerH * i) / gridLines;
+          grid.appendChild(
+            svgEl("line", {
+              x1: padding.left,
+              x2: padding.left + innerW,
+              y1: yy,
+              y2: yy,
+              stroke: "rgba(255,255,255,0.08)",
+              "stroke-width": "1",
+            })
+          );
+          const tickV = maxV - (span * i) / gridLines;
+          const tick = svgEl("text", {
+            x: padding.left - 10,
+            y: yy + 4,
+            "text-anchor": "end",
+            fill: "rgba(255,255,255,0.7)",
+            "font-size": "14",
+          });
+          tick.textContent = currency.format(tickV);
+          grid.appendChild(tick);
+        }
+        svg.appendChild(grid);
+
+        const path = values
+          .map((v, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(2)} ${y(v).toFixed(2)}`)
+          .join(" ");
+
+        const area = `${path} L ${(padding.left + innerW).toFixed(2)} ${(padding.top + innerH).toFixed(2)} L ${padding.left.toFixed(
+          2
+        )} ${(padding.top + innerH).toFixed(2)} Z`;
+
+        svg.appendChild(svgEl("path", { d: area, fill }));
+        svg.appendChild(svgEl("path", { d: path, fill: "none", stroke, "stroke-width": "3", "stroke-linecap": "round" }));
+
+        const dots = svgEl("g", {});
+        for (let i = 0; i < values.length; i++) {
+          dots.appendChild(
+            svgEl("circle", {
+              cx: x(i),
+              cy: y(values[i]),
+              r: 4.2,
+              fill: stroke,
+              stroke: "rgba(0,0,0,0.25)",
+              "stroke-width": "1.5",
+            })
+          );
+        }
+        svg.appendChild(dots);
+
+        const xLabels = svgEl("g", {});
+        const step = Math.max(1, Math.floor(labels.length / 6));
+        for (let i = 0; i < labels.length; i += step) {
+          const t = svgEl("text", {
+            x: x(i),
+            y: padding.top + innerH + 28,
+            "text-anchor": "middle",
+            fill: "rgba(255,255,255,0.7)",
+            "font-size": "13",
+          });
+          t.textContent = labels[i];
+          xLabels.appendChild(t);
+        }
+        svg.appendChild(xLabels);
+
+        target.appendChild(svg);
+      }
+
+      function renderBarChart(target, { labels, values, bar = "rgba(124,58,237,0.65)", barEdge = "rgba(124,58,237,0.9)" }) {
+        clear(target);
+        const width = 1000;
+        const height = 360;
+        const padding = { top: 24, right: 22, bottom: 62, left: 54 };
+        const innerW = width - padding.left - padding.right;
+        const innerH = height - padding.top - padding.bottom;
+        const svg = svgEl("svg", { viewBox: `0 0 ${width} ${height}`, role: "img" });
+
+        const maxV = Math.max(...values, 1);
+
+        const bw = innerW / values.length;
+        const barW = bw * 0.62;
+        const x = (i) => padding.left + i * bw + (bw - barW) / 2;
+        const y = (v) => padding.top + innerH - (innerH * v) / maxV;
+
+        for (let i = 0; i <= 4; i++) {
+          const yy = padding.top + (innerH * i) / 4;
+          svg.appendChild(
+            svgEl("line", {
+              x1: padding.left,
+              x2: padding.left + innerW,
+              y1: yy,
+              y2: yy,
+              stroke: "rgba(255,255,255,0.08)",
+              "stroke-width": "1",
+            })
+          );
+          const tickV = Math.round(maxV - (maxV * i) / 4);
+          const tick = svgEl("text", {
+            x: padding.left - 10,
+            y: yy + 4,
+            "text-anchor": "end",
+            fill: "rgba(255,255,255,0.7)",
+            "font-size": "14",
+          });
+          tick.textContent = number.format(tickV);
+          svg.appendChild(tick);
+        }
+
+        for (let i = 0; i < values.length; i++) {
+          const rect = svgEl("rect", {
+            x: x(i),
+            y: y(values[i]),
+            width: barW,
+            height: padding.top + innerH - y(values[i]),
+            rx: 10,
+            fill: bar,
+            stroke: barEdge,
+            "stroke-width": "1",
+          });
+          svg.appendChild(rect);
+
+          const label = svgEl("text", {
+            x: x(i) + barW / 2,
+            y: padding.top + innerH + 34,
+            "text-anchor": "middle",
+            fill: "rgba(255,255,255,0.75)",
+            "font-size": "13",
+          });
+          label.textContent = labels[i];
+          svg.appendChild(label);
+
+          const val = svgEl("text", {
+            x: x(i) + barW / 2,
+            y: y(values[i]) - 10,
+            "text-anchor": "middle",
+            fill: "rgba(255,255,255,0.85)",
+            "font-size": "13",
+          });
+          val.textContent = number.format(values[i]);
+          svg.appendChild(val);
+        }
+
+        target.appendChild(svg);
+      }
+
+      function polarToCartesian(cx, cy, r, angle) {
+        const rad = ((angle - 90) * Math.PI) / 180;
+        return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+      }
+
+      function arcPath(cx, cy, rOuter, rInner, startAngle, endAngle) {
+        const startOuter = polarToCartesian(cx, cy, rOuter, endAngle);
+        const endOuter = polarToCartesian(cx, cy, rOuter, startAngle);
+        const startInner = polarToCartesian(cx, cy, rInner, startAngle);
+        const endInner = polarToCartesian(cx, cy, rInner, endAngle);
+        const largeArc = endAngle - startAngle <= 180 ? "0" : "1";
+
+        return [
+          `M ${startOuter.x} ${startOuter.y}`,
+          `A ${rOuter} ${rOuter} 0 ${largeArc} 0 ${endOuter.x} ${endOuter.y}`,
+          `L ${startInner.x} ${startInner.y}`,
+          `A ${rInner} ${rInner} 0 ${largeArc} 1 ${endInner.x} ${endInner.y}`,
+          "Z",
+        ].join(" ");
+      }
+
+      function renderDonutChart(target, { segments }) {
+        clear(target);
+        const width = 520;
+        const height = 360;
+        const svg = svgEl("svg", { viewBox: `0 0 ${width} ${height}`, role: "img" });
+        const cx = 180;
+        const cy = 175;
+        const rOuter = 120;
+        const rInner = 70;
+        const total = segments.reduce((sum, s) => sum + s.value, 0) || 1;
+
+        let a = 0;
+        for (const seg of segments) {
+          const slice = (seg.value / total) * 360;
+          const start = a;
+          const end = a + slice;
+          a = end;
+
+          const p = svgEl("path", {
+            d: arcPath(cx, cy, rOuter, rInner, start, end),
+            fill: seg.color,
+            stroke: "rgba(0,0,0,0.25)",
+            "stroke-width": "1",
+          });
+          svg.appendChild(p);
+        }
+
+        const centerValue = svgEl("text", {
+          x: cx,
+          y: cy - 4,
+          "text-anchor": "middle",
+          fill: "rgba(255,255,255,0.92)",
+          "font-size": "28",
+          "font-weight": "700",
+        });
+        centerValue.textContent = number.format(total);
+        svg.appendChild(centerValue);
+
+        const centerLabel = svgEl("text", {
+          x: cx,
+          y: cy + 22,
+          "text-anchor": "middle",
+          fill: "rgba(255,255,255,0.7)",
+          "font-size": "14",
+        });
+        centerLabel.textContent = "members";
+        svg.appendChild(centerLabel);
+
+        const legend = svgEl("g", {});
+        let ly = 70;
+        for (const seg of segments) {
+          const dot = svgEl("circle", { cx: 360, cy: ly, r: 6.5, fill: seg.color });
+          const text = svgEl("text", {
+            x: 375,
+            y: ly + 5,
+            fill: "rgba(255,255,255,0.82)",
+            "font-size": "14",
+          });
+          text.textContent = `${seg.label} (${number.format(seg.value)})`;
+          legend.appendChild(dot);
+          legend.appendChild(text);
+          ly += 26;
+        }
+        svg.appendChild(legend);
+
+        target.appendChild(svg);
+      }
+
+      function seededRand(seed) {
+        let t = seed >>> 0;
+        return () => {
+          t += 0x6d2b79f5;
+          let x = t;
+          x = Math.imul(x ^ (x >>> 15), x | 1);
+          x ^= x + Math.imul(x ^ (x >>> 7), x | 61);
+          return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function dateKey(d) {
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      function shortLabel(d) {
+        return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      }
+
+      function makeDemoData({ days, seed, location }) {
+        const rand = seededRand(seed);
+
+        const stylists = [
+          { id: 101, name: "Avery" },
+          { id: 102, name: "Jordan" },
+          { id: 103, name: "Sam" },
+          { id: 104, name: "Riley" },
+          { id: 105, name: "Casey" },
+        ];
+
+        const locationFactor = location === "downtown" ? 1.14 : location === "north" ? 0.98 : location === "west" ? 0.92 : 1;
+
+        const today = new Date();
+        today.setHours(12, 0, 0, 0);
+        const start = new Date(today);
+        start.setDate(start.getDate() - (days - 1));
+
+        const daily = [];
+        let base = 4200 * locationFactor;
+        for (let i = 0; i < days; i++) {
+          const d = new Date(start);
+          d.setDate(start.getDate() + i);
+
+          const weekendBoost = d.getDay() === 6 || d.getDay() === 0 ? 1.18 : 1;
+          const noise = 0.82 + rand() * 0.46;
+          base = base * (0.985 + rand() * 0.03);
+          const revenue = Math.round(base * weekendBoost * noise);
+
+          const bookings = Math.round(26 * locationFactor * weekendBoost * (0.8 + rand() * 0.55));
+          const completed = Math.round(bookings * (0.78 + rand() * 0.18));
+          const chairHours = bookings * (0.9 + rand() * 0.6);
+          const capacityHours = 8 * stylists.length * 0.82;
+          const utilization = clamp(chairHours / capacityHours, 0, 1);
+
+          daily.push({
+            day: dateKey(d),
+            label: shortLabel(d),
+            revenue,
+            bookings,
+            completed,
+            utilization,
+          });
+        }
+
+        const bookingsByStylist = stylists.map((s) => {
+          const v = Math.round(120 * locationFactor * (0.6 + rand() * 0.9));
+          return { stylist: s.name, bookings: v };
+        });
+
+        const products = [
+          { sku: "SHAM-001", name: "Hydrate Shampoo", priceCents: 2400 },
+          { sku: "COND-002", name: "Repair Conditioner", priceCents: 2600 },
+          { sku: "SER-003", name: "Shine Serum", priceCents: 3200 },
+          { sku: "DRY-004", name: "Dry Texture Spray", priceCents: 2800 },
+          { sku: "MASK-005", name: "Deep Mask", priceCents: 3600 },
+        ].map((p) => {
+          const units = Math.round(38 * locationFactor * (0.5 + rand() * 1.2));
+          const revenueCents = units * p.priceCents;
+          return { ...p, units, revenueCents };
+        });
+
+        const subs = [
+          { customer: "Taylor G.", status: "active", plan: "Gold", periodEndDays: 18, provider: "stripe", id: "sub_9FJ2A" },
+          { customer: "Morgan K.", status: "trialing", plan: "Silver", periodEndDays: 6, provider: "stripe", id: "sub_7KQ1C" },
+          { customer: "Chris P.", status: "past_due", plan: "Gold", periodEndDays: -2, provider: "stripe", id: "sub_3PL8X" },
+          { customer: "Jamie R.", status: "canceled", plan: "Silver", periodEndDays: -21, provider: "stripe", id: "sub_1YH4M" },
+          { customer: "Alex N.", status: "active", plan: "Platinum", periodEndDays: 27, provider: "stripe", id: "sub_0ZV2T" },
+          { customer: "Rowan S.", status: "active", plan: "Silver", periodEndDays: 11, provider: "stripe", id: "sub_2DD6Q" },
+          { customer: "Dakota B.", status: "active", plan: "Gold", periodEndDays: 2, provider: "stripe", id: "sub_4RP9J" },
+          { customer: "Quinn L.", status: "inactive", plan: "—", periodEndDays: -120, provider: "—", id: "—" },
+        ].map((s) => {
+          const end = new Date();
+          end.setDate(end.getDate() + s.periodEndDays);
+          return { ...s, periodEnd: end };
+        });
+
+        const upcoming = [
+          { inHours: 3, client: "Taylor G.", stylist: "Avery", service: "Color + blowout", status: "scheduled", notes: "Tone cool" },
+          { inHours: 5, client: "Riley M.", stylist: "Jordan", service: "Mens cut", status: "scheduled", notes: "Clipper fade" },
+          { inHours: 8, client: "Morgan K.", stylist: "Sam", service: "Balayage", status: "scheduled", notes: "High lift" },
+          { inHours: 11, client: "Chris P.", stylist: "Riley", service: "Beard trim", status: "scheduled", notes: "Quick" },
+          { inHours: 22, client: "Jamie R.", stylist: "Casey", service: "Highlights", status: "scheduled", notes: "Consult first" },
+          { inHours: 28, client: "Alex N.", stylist: "Avery", service: "Kids cut", status: "scheduled", notes: "Sensitive scalp" },
+          { inHours: 31, client: "Quinn L.", stylist: "Sam", service: "Blowout", status: "scheduled", notes: "Add curls" },
+          { inHours: 36, client: "Dakota B.", stylist: "Jordan", service: "Color refresh", status: "scheduled", notes: "Root touch-up" },
+        ].map((b) => {
+          const d = new Date();
+          d.setMinutes(0, 0, 0);
+          d.setHours(d.getHours() + b.inHours);
+          return { ...b, startsAt: d };
+        });
+
+        const subsBreakdown = [
+          { label: "Active", value: subs.filter((s) => s.status === "active").length, color: "rgba(34,197,94,0.85)" },
+          { label: "Trialing", value: subs.filter((s) => s.status === "trialing").length, color: "rgba(96,165,250,0.85)" },
+          { label: "Past due", value: subs.filter((s) => s.status === "past_due").length, color: "rgba(245,158,11,0.9)" },
+          { label: "Canceled", value: subs.filter((s) => s.status === "canceled").length, color: "rgba(239,68,68,0.85)" },
+          { label: "Inactive", value: subs.filter((s) => s.status === "inactive").length, color: "rgba(255,255,255,0.35)" },
+        ];
+
+        return { daily, bookingsByStylist, products, subs, upcoming, subsBreakdown };
+      }
+
+      function renderTables({ upcoming, products, subs }) {
+        const upcomingBody = document.getElementById("tblUpcoming");
+        clear(upcomingBody);
+        for (const row of upcoming) {
+          const tr = document.createElement("tr");
+          const starts = row.startsAt.toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit" });
+          tr.innerHTML = `
+            <td>${starts}</td>
+            <td>${row.client}</td>
+            <td>${row.stylist}</td>
+            <td>${row.service}</td>
+            <td></td>
+            <td>${row.notes || "—"}</td>
+          `;
+          const badgeCell = tr.children[4];
+          badgeCell.appendChild(addBadge(row.status, row.status === "scheduled" ? "good" : ""));
+          upcomingBody.appendChild(tr);
+        }
+
+        const productsBody = document.getElementById("tblProducts");
+        clear(productsBody);
+        const sortedProducts = [...products].sort((a, b) => b.revenueCents - a.revenueCents);
+        for (const p of sortedProducts) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${p.name}</td>
+            <td>${p.sku}</td>
+            <td>${number.format(p.units)}</td>
+            <td>${currency.format(p.revenueCents / 100)}</td>
+          `;
+          productsBody.appendChild(tr);
+        }
+
+        const subsBody = document.getElementById("tblSubs");
+        clear(subsBody);
+        for (const s of subs) {
+          const tr = document.createElement("tr");
+          const end = s.periodEnd.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+          tr.innerHTML = `
+            <td>${s.customer}</td>
+            <td></td>
+            <td>${s.plan}</td>
+            <td>${end}</td>
+            <td>${s.provider}</td>
+            <td><code>${s.id}</code></td>
+          `;
+          const tone =
+            s.status === "active"
+              ? "good"
+              : s.status === "trialing"
+              ? "warn"
+              : s.status === "past_due"
+              ? "bad"
+              : s.status === "canceled"
+              ? ""
+              : "";
+          tr.children[1].appendChild(addBadge(s.status, tone));
+          subsBody.appendChild(tr);
+        }
+      }
+
+      function renderDashboard({ daily, bookingsByStylist, products, subs, upcoming, subsBreakdown }, { days }) {
+        const revenueTotal = daily.reduce((sum, d) => sum + d.revenue, 0);
+        const bookingsTotal = daily.reduce((sum, d) => sum + d.bookings, 0);
+        const utilAvg = daily.reduce((sum, d) => sum + d.utilization, 0) / Math.max(1, daily.length);
+        const activeSubs = subs.filter((s) => s.status === "active").length;
+
+        const mid = Math.floor(daily.length / 2);
+        const revPrev = daily.slice(0, mid).reduce((sum, d) => sum + d.revenue, 0);
+        const revCurr = daily.slice(mid).reduce((sum, d) => sum + d.revenue, 0);
+        const revDelta = revPrev ? (revCurr - revPrev) / revPrev : 0;
+
+        const bookPrev = daily.slice(0, mid).reduce((sum, d) => sum + d.bookings, 0);
+        const bookCurr = daily.slice(mid).reduce((sum, d) => sum + d.bookings, 0);
+        const bookDelta = bookPrev ? (bookCurr - bookPrev) / bookPrev : 0;
+
+        document.getElementById("kpiRevenue").textContent = currency.format(revenueTotal);
+        document.getElementById("kpiRevenueDelta").textContent = fmtDelta(revCurr, revPrev, "period");
+
+        const pill = document.getElementById("kpiRevenuePill");
+        const dot = pill.querySelector(".dash-dot");
+        const tone = sparkColorForDelta(revDelta);
+        dot.className = `dash-dot ${tone.dot}`.trim();
+        pill.style.borderColor = tone.dot === "good" ? "rgba(34,197,94,0.35)" : tone.dot === "bad" ? "rgba(239,68,68,0.35)" : "";
+        pill.style.background =
+          tone.dot === "good"
+            ? "rgba(34,197,94,0.12)"
+            : tone.dot === "bad"
+            ? "rgba(239,68,68,0.12)"
+            : "rgba(0,0,0,0.18)";
+
+        document.getElementById("kpiBookings").textContent = number.format(bookingsTotal);
+        document.getElementById("kpiBookingsDelta").textContent = fmtDelta(bookCurr, bookPrev, "period");
+
+        document.getElementById("kpiUtil").textContent = percent0.format(utilAvg);
+        document.getElementById("kpiUtilDelta").textContent = `Avg across ${days} days`;
+
+        document.getElementById("kpiActiveSubs").textContent = number.format(activeSubs);
+        document.getElementById("kpiActiveSubsDelta").textContent = `${number.format(subs.length)} total customers`;
+
+        document.getElementById("metaRevenue").textContent = `${days} days · ${number.format(bookingsTotal)} bookings`;
+        document.getElementById("metaSubs").textContent = `${number.format(subs.length)} customers`;
+        document.getElementById("metaBookings").textContent = `Top performer: ${[...bookingsByStylist].sort((a, b) => b.bookings - a.bookings)[0].stylist}`;
+
+        renderLineChart(document.getElementById("chartRevenue"), {
+          labels: daily.map((d) => d.label),
+          values: daily.map((d) => d.revenue),
+          stroke: "rgba(96,165,250,0.95)",
+          fill: "rgba(96,165,250,0.16)",
+        });
+
+        renderDonutChart(document.getElementById("chartSubs"), { segments: subsBreakdown });
+
+        renderBarChart(document.getElementById("chartBookings"), {
+          labels: bookingsByStylist.map((s) => s.stylist),
+          values: bookingsByStylist.map((s) => s.bookings),
+        });
+
+        renderTables({ upcoming, products, subs });
+      }
+
+      function readControls() {
+        const days = Number(document.getElementById("range").value);
+        const location = document.getElementById("location").value;
+        return { days, location };
+      }
+
+      let seed = 1337;
+      function run(seedOverride) {
+        const { days, location } = readControls();
+        seed = typeof seedOverride === "number" ? seedOverride : seed;
+        const demo = makeDemoData({ days, seed, location });
+        renderDashboard(demo, { days, location });
+      }
+
+      document.getElementById("controls").addEventListener("submit", (e) => {
+        e.preventDefault();
+        run(seed);
+      });
+
+      document.getElementById("randomize").addEventListener("click", () => {
+        run(Math.floor(Math.random() * 1e9));
+      });
+
+      run(seed);
+    </script>
+  </body>
+</html>
