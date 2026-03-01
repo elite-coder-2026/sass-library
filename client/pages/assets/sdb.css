@@ -1,0 +1,367 @@
+:root {
+        color-scheme: light;
+        --dash-bg: #0b1220;
+        --dash-panel: rgba(255, 255, 255, 0.06);
+        --dash-panel-2: rgba(255, 255, 255, 0.09);
+        --dash-border: rgba(255, 255, 255, 0.12);
+        --dash-text: rgba(255, 255, 255, 0.92);
+        --dash-muted: rgba(255, 255, 255, 0.7);
+        --dash-soft: rgba(255, 255, 255, 0.04);
+        --dash-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        --dash-radius: 16px;
+        --dash-gap: 1rem;
+        --dash-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
+        --dash-accent: #7c3aed;
+        --dash-good: #22c55e;
+        --dash-warn: #f59e0b;
+        --dash-bad: #ef4444;
+        --dash-blue: #60a5fa;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--dash-font);
+        background: radial-gradient(1200px 600px at 20% 0%, rgba(124, 58, 237, 0.22), transparent 60%),
+          radial-gradient(1000px 500px at 90% 10%, rgba(96, 165, 250, 0.18), transparent 55%),
+          radial-gradient(900px 500px at 50% 110%, rgba(34, 197, 94, 0.12), transparent 55%),
+          var(--dash-bg);
+        color: var(--dash-text);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .dash-skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        padding: 0.75rem 1rem;
+        background: #111827;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 12px;
+        z-index: 10;
+      }
+      .dash-skip:focus {
+        left: 1rem;
+        top: 1rem;
+      }
+
+      .dash-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .dash-header {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 1.25rem;
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+        box-shadow: var(--dash-shadow);
+      }
+
+      .dash-title {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+      }
+
+      .dash-subtitle {
+        margin: 0.4rem 0 0;
+        color: var(--dash-muted);
+        font-size: 0.95rem;
+      }
+
+      .dash-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        min-width: 320px;
+      }
+
+      .dash-field {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .dash-label {
+        font-size: 0.8rem;
+        color: var(--dash-muted);
+      }
+
+      .dash-input,
+      .dash-select {
+        appearance: none;
+        font: inherit;
+        color: var(--dash-text);
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 12px;
+        padding: 0.55rem 0.75rem;
+        min-height: 2.35rem;
+      }
+
+      .dash-input:focus,
+      .dash-select:focus {
+        outline: 2px solid rgba(124, 58, 237, 0.55);
+        outline-offset: 2px;
+        border-color: rgba(124, 58, 237, 0.5);
+      }
+
+      .dash-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .dash-btn {
+        cursor: pointer;
+        font: inherit;
+        color: var(--dash-text);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 0.55rem 0.8rem;
+        min-height: 2.35rem;
+        transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+      }
+      .dash-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .dash-btn:active {
+        transform: translateY(1px);
+      }
+      .dash-btn-primary {
+        border-color: rgba(124, 58, 237, 0.55);
+        background: rgba(124, 58, 237, 0.22);
+      }
+      .dash-btn-primary:hover {
+        background: rgba(124, 58, 237, 0.3);
+      }
+
+      .dash-section {
+        margin-top: 1.25rem;
+      }
+
+      .dash-h2 {
+        margin: 0 0 0.8rem;
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+      }
+
+      .dash-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: var(--dash-gap);
+      }
+
+      .dash-card {
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+      }
+
+      .dash-card-inner {
+        padding: 1rem;
+      }
+
+      .dash-kpi {
+        display: grid;
+        gap: 0.3rem;
+      }
+
+      .dash-kpi-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .dash-kpi-label {
+        font-size: 0.85rem;
+        color: var(--dash-muted);
+      }
+
+      .dash-kpi-value {
+        font-size: 1.5rem;
+        letter-spacing: -0.03em;
+        margin: 0;
+      }
+
+      .dash-kpi-delta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.82rem;
+        color: var(--dash-muted);
+      }
+
+      .dash-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border-radius: 999px;
+        padding: 0.25rem 0.55rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.18);
+        font-size: 0.78rem;
+        color: var(--dash-muted);
+        white-space: nowrap;
+      }
+
+      .dash-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--dash-accent);
+        box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.16);
+      }
+      .dash-dot.good {
+        background: var(--dash-good);
+        box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.14);
+      }
+      .dash-dot.warn {
+        background: var(--dash-warn);
+        box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.14);
+      }
+      .dash-dot.bad {
+        background: var(--dash-bad);
+        box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.14);
+      }
+
+      .dash-span-3 {
+        grid-column: span 3;
+      }
+      .dash-span-4 {
+        grid-column: span 4;
+      }
+      .dash-span-5 {
+        grid-column: span 5;
+      }
+      .dash-span-6 {
+        grid-column: span 6;
+      }
+      .dash-span-7 {
+        grid-column: span 7;
+      }
+      .dash-span-8 {
+        grid-column: span 8;
+      }
+      .dash-span-12 {
+        grid-column: span 12;
+      }
+
+      .dash-chart-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.75rem;
+      }
+
+      .dash-meta {
+        color: var(--dash-muted);
+        font-size: 0.85rem;
+      }
+
+      .dash-chart {
+        height: 280px;
+        padding: 0.5rem 1rem 1rem;
+      }
+
+      .dash-chart svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .dash-table-wrap {
+        overflow: auto;
+      }
+
+      .dash-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 740px;
+      }
+
+      .dash-table th,
+      .dash-table td {
+        padding: 0.75rem 0.85rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.92rem;
+      }
+
+      .dash-table th {
+        position: sticky;
+        top: 0;
+        background: rgba(20, 26, 42, 0.9);
+        backdrop-filter: blur(8px);
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 650;
+        z-index: 1;
+      }
+
+      .dash-table tr:hover td {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .dash-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.22rem 0.5rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.18);
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.82);
+        white-space: nowrap;
+      }
+
+      .dash-badge.good {
+        border-color: rgba(34, 197, 94, 0.28);
+        background: rgba(34, 197, 94, 0.12);
+      }
+      .dash-badge.warn {
+        border-color: rgba(245, 158, 11, 0.28);
+        background: rgba(245, 158, 11, 0.12);
+      }
+      .dash-badge.bad {
+        border-color: rgba(239, 68, 68, 0.28);
+        background: rgba(239, 68, 68, 0.12);
+      }
+
+      .dash-footer {
+        margin-top: 1.25rem;
+        color: var(--dash-muted);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 64rem) {
+        .dash-controls {
+          min-width: 0;
+        }
+        .dash-span-3 {
+          grid-column: span 6;
+        }
+        .dash-span-4,
+        .dash-span-5,
+        .dash-span-6,
+        .dash-span-7,
+        .dash-span-8 {
+          grid-column: span 12;
+        }
+      }
